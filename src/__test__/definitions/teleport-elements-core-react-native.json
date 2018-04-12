@@ -1,0 +1,28 @@
+{
+  "name": "teleport-elements-core-react-native",
+  "version": "0.0.1",
+  "type": "mapping",
+  "library": "teleport-elements-core",
+  "target": "react-native",
+  "dependencies": {
+    "react-native": "latest"
+  },
+  "map": {
+    "Text": {
+      "library": "react-native",
+      "type": "Text"
+    },
+    "Button": {
+      "library": "react-native",
+      "type": "TouchableOpacity"
+    },
+    "Image": {
+      "library": "react-native",
+      "type": "Image"
+    },
+    "View": {
+      "library": "react-native",
+      "type": "View"
+    }
+  }
+}

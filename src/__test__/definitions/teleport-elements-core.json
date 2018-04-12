@@ -1,0 +1,66 @@
+{
+  "name": "teleport-elements-core",
+  "version": "0.0.1",
+  "type": "library",
+  "elements": {
+    "View": {
+      "defaults": {
+        "style": {
+          "display": "flex",
+          "backgroundColor": "#c0c0c0",
+          "width": 100,
+          "height": 50
+        }
+      }
+    },
+    "Image": {
+      "defaults": {
+        "style": {
+          "display": "flex",
+          "width": 300,
+          "height": 250
+        }
+      }
+    },
+    "Text": {
+      "defaults": {
+        "style": {
+          "display": "flex",
+          "color": "#999"
+        },
+        "children": "text"
+      }
+    },
+    "Pre": {
+      "defaults": {
+        "style": {
+          "display": "flex",
+          "color": "#000"
+        },
+        "children": "pre"
+      }
+    },
+    "H1": {
+      "defaults": {
+        "style": {
+          "display": "flex",
+          "color": "#000",
+          "fontSize": 24
+        },
+        "children": "Heading 1"
+      }
+    },
+    "Button": {
+      "defaults": {
+        "style": {
+          "display": "flex",
+          "backgroundColor": "blue",
+          "width": 55,
+          "height": 25,
+          "color": "#FFF"
+        },
+        "children": "button"
+      }
+    }
+  }
+}

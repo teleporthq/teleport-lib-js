@@ -1,0 +1,25 @@
+# Set to true to
+root = true
+# Indicates that the following rules will apply to all files
+[*]
+# Choose in between tab or space
+indent_style = space
+# number of columns used per indentation level
+indent_size = 2
+# line break representation
+end_of_line = lf
+# character set
+charset = utf-8
+# Remove whitespace at the end of lines
+trim_trailing_whitespace = true
+# Insert a line at the end of a file
+insert_final_newline = false
+# applies to files with the .md extension
+[*.md]
+trim_trailing_whitespace = false
+# applies to js files inside the src folder
+[src/**.js]
+trim_trailing_whitespace = true
+# applied to package.json and .travis.yml
+[{package.json,.travis.yml}]
+indent_size = 2
