@@ -11,7 +11,7 @@ import transformers from './transformers'
 let fs = null
 if (typeof window === 'undefined') {
   // tslint:disable-next-line:no-var-requires
-  fs = require('fs-jetpack')
+  fs = require('fs')
 }
 
 class TeleportLib {
@@ -28,7 +28,15 @@ class TeleportLib {
   public async readPluginDefinitionFromFile(path: string): Promise<any> {
     // tslint:disable-next-line:max-line-length
     if (typeof window !== 'undefined') throw new Error('reading from files can only be used when lib is used in Node, not within a browser')
-    return await fs.read(path, 'json')
+    return new Promise((resolve, reject) => {
+      try {
+        const content = fs.readFileSync(path)
+        const json = JSON.parse(content)
+        resolve(json)
+      } catch (error) {
+        reject(error)
+      }
+    }
   }
 
   public async readPluginDefinitionFromUrl(url: string): Promise<any> {
@@ -50,7 +58,7 @@ class TeleportLib {
       case 'string':
         if (isUrl(plugin)) {
           this.usePlugin(await this.readPluginDefinitionFromUrl(plugin as string))
-        } else if (fs.exists(plugin)) {
+        } else if (fs.existsSync(plugin)) {
           this.usePlugin(await this.readPluginDefinitionFromFile(plugin as string))
         } else {
           this.usePlugin(await this.readPluginDefinitionFromUrl(`https://storage.googleapis.com/teleport-definitions/${plugin}.json`))
