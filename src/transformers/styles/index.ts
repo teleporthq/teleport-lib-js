@@ -1,7 +1,7 @@
-import jstocss from './jstocss'
+import * as jsstocss from './jsstocss'
 
 const styleTransformers = {
-  jstocss
+  jsstocss
 }
 
 export default styleTransformers

@@ -5,7 +5,7 @@ jss.setup(preset())
 
 const generateClassName = (rule, sheet) => rule.key
 
-export default function transform(styles) {
+export function stylesheet(styles) {
   const styleSheet = jss.createStyleSheet(styles, {generateClassName})
 
   return {
