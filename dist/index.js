@@ -45,7 +45,7 @@ var transformers_1 = require("./transformers");
 var fs = null;
 if (typeof window === 'undefined') {
     // tslint:disable-next-line:no-var-requires
-    fs = require('fs-jetpack');
+    fs = require('fs');
 }
 var TeleportLib = /** @class */ (function () {
     function TeleportLib() {
@@ -61,14 +61,19 @@ var TeleportLib = /** @class */ (function () {
     TeleportLib.prototype.readPluginDefinitionFromFile = function (path) {
         return __awaiter(this, void 0, Promise, function () {
             return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        // tslint:disable-next-line:max-line-length
-                        if (typeof window !== 'undefined')
-                            throw new Error('reading from files can only be used when lib is used in Node, not within a browser');
-                        return [4 /*yield*/, fs.read(path, 'json')];
-                    case 1: return [2 /*return*/, _a.sent()];
-                }
+                // tslint:disable-next-line:max-line-length
+                if (typeof window !== 'undefined')
+                    throw new Error('reading from files can only be used when lib is used in Node, not within a browser');
+                return [2 /*return*/, new Promise(function (resolve, reject) {
+                        try {
+                            var content = fs.readFileSync(path);
+                            var json = JSON.parse(content);
+                            resolve(json);
+                        }
+                        catch (error) {
+                            reject(error);
+                        }
+                    })];
             });
         });
     };
@@ -116,7 +121,7 @@ var TeleportLib = /** @class */ (function () {
                         _b.apply(this, [_e.sent()]);
                         return [3 /*break*/, 7];
                     case 3:
-                        if (!fs.exists(plugin)) return [3 /*break*/, 5];
+                        if (!fs.existsSync(plugin)) return [3 /*break*/, 5];
                         _c = this.usePlugin;
                         return [4 /*yield*/, this.readPluginDefinitionFromFile(plugin)];
                     case 4:

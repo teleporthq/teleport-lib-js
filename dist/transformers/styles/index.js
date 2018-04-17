@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var jstocss_1 = require("./jstocss");
+var jsstocss = require("./jsstocss");
 var styleTransformers = {
-    jstocss: jstocss_1.default
+    jsstocss: jsstocss
 };
 exports.default = styleTransformers;
 //# sourceMappingURL=index.js.map
