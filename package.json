@@ -20,7 +20,6 @@
     ]
   },
   "scripts": {
-    "postinstall": "typings install dt~mocha dt~require dt~chai --save --global",
     "watch-build": "./node_modules/.bin/tsc -w",
     "build": "npm run clean && ./node_modules/.bin/tsc",
     "build-docs": "rimraf docs && typedoc --options typedoc.json src/",
@@ -47,8 +46,7 @@
     "source-map-support": "^0.5.4",
     "ts-node": "^5.0.1",
     "typedoc": "^0.11.1",
-    "typescript": "^2.7.2",
-    "typings": "^2.1.1"
+    "typescript": "^2.7.2"
   },
   "dependencies": {
     "@types/node": "^9.6.0",
