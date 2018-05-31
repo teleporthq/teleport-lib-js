@@ -58,7 +58,7 @@ class TeleportLib {
       case 'string':
         if (isUrl(plugin)) {
           this.usePlugin(await this.readPluginDefinitionFromUrl(plugin as string))
-        } else if (fs.existsSync(plugin)) {
+        } else if (typeof window === 'undefined' && fs.existsSync(plugin)) {
           this.usePlugin(await this.readPluginDefinitionFromFile(plugin as string))
         } else {
           this.usePlugin(await this.readPluginDefinitionFromUrl(`https://storage.googleapis.com/teleport-definitions/${plugin}.json`))
