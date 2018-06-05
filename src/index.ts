@@ -90,6 +90,9 @@ class TeleportLib {
       case 'generator':
         this.useGenerator(pluginData as Generator)
         break
+      case 'gui':
+        this.useGui(pluginData)
+        break
       default:
         console.error('unrecognised plugin type:', pluginData)
     }
@@ -175,6 +178,18 @@ class TeleportLib {
 
   public generator(generatorName: string): Generator | null | undefined {
     return this.generators[generatorName]
+  }
+
+  public useGui(guiData: object): void {
+    const { library: libraryName } = guiData
+    const library = this.library(libraryName)
+
+    if (! library) {
+      console.error(`Library ${libraryName} was not found for gui package ${guiData.name}`)
+      return
+    }
+
+    library.useGui(guiData)
   }
 }
 

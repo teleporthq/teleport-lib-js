@@ -62,4 +62,24 @@ export default class ElementsLibrary {
   public mapping(targetName: string): ElementsLibraryTargetMapping | null {
     return this.targetMapping[targetName]
   }
+
+  /**
+   * 
+   * @param guiData sets up gui data to be used by the Teleport Playground Inspector
+   */
+  public useGui(guiData): void {
+    if (guiData.library !== this.name) {
+      throw new Error(`Library gui ${guiData.library} not compatible with ${this.name}`)
+    }
+
+    if (! guiData.elements) throw new Error(`invalid gui defintion for ${this.name}`)
+
+    Object.keys(guiData.elements).map(elementName => {
+      const element = this.elements[elementName]
+
+      if (!element) return
+
+      element.gui = guiData.elements[elementName]
+    })
+  }
 }

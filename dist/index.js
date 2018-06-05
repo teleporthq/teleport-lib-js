@@ -121,7 +121,7 @@ var TeleportLib = /** @class */ (function () {
                         _b.apply(this, [_e.sent()]);
                         return [3 /*break*/, 7];
                     case 3:
-                        if (!fs.existsSync(plugin)) return [3 /*break*/, 5];
+                        if (!(typeof window === 'undefined' && fs.existsSync(plugin))) return [3 /*break*/, 5];
                         _c = this.usePlugin;
                         return [4 /*yield*/, this.readPluginDefinitionFromFile(plugin)];
                     case 4:
@@ -166,6 +166,9 @@ var TeleportLib = /** @class */ (function () {
                 break;
             case 'generator':
                 this.useGenerator(pluginData);
+                break;
+            case 'gui':
+                this.useGui(pluginData);
                 break;
             default:
                 console.error('unrecognised plugin type:', pluginData);
@@ -234,6 +237,15 @@ var TeleportLib = /** @class */ (function () {
     };
     TeleportLib.prototype.generator = function (generatorName) {
         return this.generators[generatorName];
+    };
+    TeleportLib.prototype.useGui = function (guiData) {
+        var libraryName = guiData.library;
+        var library = this.library(libraryName);
+        if (!library) {
+            console.error("Library " + libraryName + " was not found for gui package " + guiData.name);
+            return;
+        }
+        library.useGui(guiData);
     };
     return TeleportLib;
 }());
