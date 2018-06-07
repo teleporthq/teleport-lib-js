@@ -1,4 +1,4 @@
-export default class RenderResult {
+export default class FileSet {
   public filesByName: object = {}
 
   public addFile(name: string, content: string): void {
