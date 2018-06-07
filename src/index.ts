@@ -38,7 +38,7 @@ class TeleportLib {
       } catch (error) {
         reject(error)
       }
-    }
+    })
   }
 
   public async readPluginDefinitionFromUrl(url: string): Promise<any> {
