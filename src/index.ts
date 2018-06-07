@@ -4,6 +4,7 @@ import * as fetch from 'isomorphic-fetch'
 
 import Target from './lib/Target'
 import Generator from './lib/Generator'
+import Publisher from './lib/Publisher'
 import ElementsLibrary from './lib/ElementsLibrary'
 import ElementsLibraryTargetMapping from './lib/ElementsLibraryTargetMapping'
 import transformers from './transformers'
@@ -19,6 +20,7 @@ class TeleportLib {
   public mappings: object = {}
   public targets: object = {}
   public generators: object = {}
+  public publishers: object = {}
   public transformers: any = transformers
 
   // ------------------------------------------------------------
@@ -89,6 +91,9 @@ class TeleportLib {
         break
       case 'generator':
         this.useGenerator(pluginData as Generator)
+        break
+      case 'publisher':
+        this.usePublisher(pluginData as Publisher)
         break
       case 'gui':
         this.useGui(pluginData)
@@ -180,13 +185,24 @@ class TeleportLib {
     return this.generators[generatorName]
   }
 
+  // ------------------------------------------------------------
+  // generators
+  // ------------------------------------------------------------
+  public usePublisher(publisher: Publisher): TeleportLib {
+    this.publishers[publisher.name] = publisher
+    return this
+  }
+
+  public publisher(publisherName: string): Publisher | null | undefined {
+    return this.publishers[publisherName]
+  }
+
   public useGui(guiData: object): void {
     const { library: libraryName } = guiData
     const library = this.library(libraryName)
 
-    if (! library) {
-      console.error(`Library ${libraryName} was not found for gui package ${guiData.name}`)
-      return
+    if (!library) {
+      return console.error(`Library ${libraryName} was not found for gui package ${guiData.name}`)
     }
 
     library.useGui(guiData)
@@ -196,6 +212,7 @@ class TeleportLib {
 export default new TeleportLib()
 
 export { default as Generator } from './lib/Generator'
+export { default as Publisher } from './lib/Publisher'
 export { default as ComponentGenerator } from './lib/Generator/Component'
 export { default as ProjectGenerator } from './lib/Generator/Project'
-export { default as RenderResult } from './lib/Generator/RenderResult'
+export { default as FileSet } from './lib/Generator/FileSet'

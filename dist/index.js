@@ -53,6 +53,7 @@ var TeleportLib = /** @class */ (function () {
         this.mappings = {};
         this.targets = {};
         this.generators = {};
+        this.publishers = {};
         this.transformers = transformers_1.default;
     }
     // ------------------------------------------------------------
@@ -167,6 +168,9 @@ var TeleportLib = /** @class */ (function () {
             case 'generator':
                 this.useGenerator(pluginData);
                 break;
+            case 'publisher':
+                this.usePublisher(pluginData);
+                break;
             case 'gui':
                 this.useGui(pluginData);
                 break;
@@ -238,12 +242,21 @@ var TeleportLib = /** @class */ (function () {
     TeleportLib.prototype.generator = function (generatorName) {
         return this.generators[generatorName];
     };
+    // ------------------------------------------------------------
+    // generators
+    // ------------------------------------------------------------
+    TeleportLib.prototype.usePublisher = function (publisher) {
+        this.publishers[publisher.name] = publisher;
+        return this;
+    };
+    TeleportLib.prototype.publisher = function (publisherName) {
+        return this.publishers[publisherName];
+    };
     TeleportLib.prototype.useGui = function (guiData) {
         var libraryName = guiData.library;
         var library = this.library(libraryName);
         if (!library) {
-            console.error("Library " + libraryName + " was not found for gui package " + guiData.name);
-            return;
+            return console.error("Library " + libraryName + " was not found for gui package " + guiData.name);
         }
         library.useGui(guiData);
     };
@@ -252,10 +265,12 @@ var TeleportLib = /** @class */ (function () {
 exports.default = new TeleportLib();
 var Generator_1 = require("./lib/Generator");
 exports.Generator = Generator_1.default;
+var Publisher_1 = require("./lib/Publisher");
+exports.Publisher = Publisher_1.default;
 var Component_1 = require("./lib/Generator/Component");
 exports.ComponentGenerator = Component_1.default;
 var Project_1 = require("./lib/Generator/Project");
 exports.ProjectGenerator = Project_1.default;
-var RenderResult_1 = require("./lib/Generator/RenderResult");
-exports.RenderResult = RenderResult_1.default;
+var FileSet_1 = require("./lib/Generator/FileSet");
+exports.FileSet = FileSet_1.default;
 //# sourceMappingURL=index.js.map
