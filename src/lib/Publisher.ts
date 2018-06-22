@@ -5,7 +5,6 @@ class Publisher {
   constructor(name: string) {
     this.name = name
   }
-
 }
 
 export default Publisher

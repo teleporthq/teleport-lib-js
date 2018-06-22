@@ -4,10 +4,8 @@ import ElementsLibrary from './ElementsLibrary'
 
 export default class Target {
   public name: string
-  /**
-   * all generators defined for this target
-   */
   public _generator: Generator
+
   /**
    * all mappings defined for this target
    */
@@ -42,7 +40,7 @@ export default class Target {
    * retrieves a mapping by it's name
    * @param mappingName
    */
-  public mapping(mappingName: string): ElementsLibraryTargetMapping | null {
+  public mapping(mappingName: string): ElementsLibraryTargetMapping | undefined {
     return this.mappings[mappingName]
   }
 
@@ -61,7 +59,7 @@ export default class Target {
    */
   public map(source: string, type: string): object | null {
     const mapping = this.mapLibrary(source)
-    if (! mapping) return null
+    if (!mapping) return null
 
     return mapping.map(type)
   }

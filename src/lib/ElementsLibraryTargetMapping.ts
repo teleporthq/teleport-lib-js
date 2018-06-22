@@ -1,6 +1,3 @@
-import * as fs from 'fs-jetpack'
-import * as isUrl from 'is-url'
-import fetch from 'node-fetch'
 import Target from './Target'
 import ElementsLibrary from './ElementsLibrary'
 import TeleportLib from '../index'

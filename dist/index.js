@@ -62,9 +62,10 @@ var TeleportLib = /** @class */ (function () {
     TeleportLib.prototype.readPluginDefinitionFromFile = function (path) {
         return __awaiter(this, void 0, Promise, function () {
             return __generator(this, function (_a) {
-                // tslint:disable-next-line:max-line-length
                 if (typeof window !== 'undefined')
                     throw new Error('reading from files can only be used when lib is used in Node, not within a browser');
+                if (!fs.existsSync(path))
+                    throw new Error("path `" + path + "` does not exist");
                 return [2 /*return*/, new Promise(function (resolve, reject) {
                         try {
                             var content = fs.readFileSync(path);
@@ -79,11 +80,13 @@ var TeleportLib = /** @class */ (function () {
         });
     };
     TeleportLib.prototype.readPluginDefinitionFromUrl = function (url) {
-        return __awaiter(this, void 0, Promise, function () {
-            var response, data;
+        return __awaiter(this, void 0, void 0, function () {
+            var response, data, error_1;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, fetch(url)];
+                    case 0:
+                        _a.trys.push([0, 3, , 4]);
+                        return [4 /*yield*/, fetch(url)];
                     case 1:
                         response = _a.sent();
                         if (response.status !== 200)
@@ -94,6 +97,10 @@ var TeleportLib = /** @class */ (function () {
                         if (!data)
                             throw new Error("Could not download " + url + ": EMPTY RESPONSE");
                         return [2 /*return*/, data];
+                    case 3:
+                        error_1 = _a.sent();
+                        throw new Error(error_1);
+                    case 4: return [2 /*return*/];
                 }
             });
         });
@@ -104,39 +111,39 @@ var TeleportLib = /** @class */ (function () {
     TeleportLib.prototype.use = function (plugin) {
         return __awaiter(this, void 0, Promise, function () {
             var _this = this;
-            var _a, _b, _c, _d;
-            return __generator(this, function (_e) {
-                switch (_e.label) {
+            var _a, _b, _c;
+            return __generator(this, function (_d) {
+                switch (_d.label) {
                     case 0:
                         _a = typeof plugin;
                         switch (_a) {
                             case 'string': return [3 /*break*/, 1];
-                            case 'object': return [3 /*break*/, 8];
+                            case 'object': return [3 /*break*/, 6];
                         }
-                        return [3 /*break*/, 12];
+                        return [3 /*break*/, 10];
                     case 1:
                         if (!isUrl(plugin)) return [3 /*break*/, 3];
                         _b = this.usePlugin;
                         return [4 /*yield*/, this.readPluginDefinitionFromUrl(plugin)];
                     case 2:
-                        _b.apply(this, [_e.sent()]);
-                        return [3 /*break*/, 7];
+                        _b.apply(this, [_d.sent()]);
+                        return [3 /*break*/, 5];
                     case 3:
-                        if (!(typeof window === 'undefined' && fs.existsSync(plugin))) return [3 /*break*/, 5];
                         _c = this.usePlugin;
                         return [4 /*yield*/, this.readPluginDefinitionFromFile(plugin)];
                     case 4:
-                        _c.apply(this, [_e.sent()]);
-                        return [3 /*break*/, 7];
-                    case 5:
-                        _d = this.usePlugin;
-                        return [4 /*yield*/, this.readPluginDefinitionFromUrl("https://storage.googleapis.com/teleport-definitions/" + plugin + ".json")];
+                        _c.apply(this, [_d.sent()]);
+                        _d.label = 5;
+                    case 5: 
+                    // else {
+                    //   console.log('')
+                    //   // tslint:disable-next-line:max-line-length
+                    //   this.usePlugin(await this.readPluginDefinitionFromUrl(`https://storage.googleapis.com/teleport-definitions/${plugin}.json`))
+                    //   // throw new Error(`plugin sent as string is neither a valid url, nor a file: ${plugin}`)
+                    // }
+                    return [3 /*break*/, 10];
                     case 6:
-                        _d.apply(this, [_e.sent()]);
-                        _e.label = 7;
-                    case 7: return [3 /*break*/, 12];
-                    case 8:
-                        if (!Array.isArray(plugin)) return [3 /*break*/, 10];
+                        if (!Array.isArray(plugin)) return [3 /*break*/, 8];
                         return [4 /*yield*/, Promise.mapSeries(plugin, function (pluginItem) { return __awaiter(_this, void 0, Promise, function () {
                                 return __generator(this, function (_a) {
                                     switch (_a.label) {
@@ -145,14 +152,16 @@ var TeleportLib = /** @class */ (function () {
                                     }
                                 });
                             }); })];
-                    case 9:
-                        _e.sent();
-                        return [3 /*break*/, 11];
-                    case 10:
+                    case 7:
+                        _d.sent();
+                        return [3 /*break*/, 9];
+                    case 8:
                         this.usePlugin(plugin);
-                        _e.label = 11;
-                    case 11: return [3 /*break*/, 12];
-                    case 12: return [2 /*return*/];
+                        _d.label = 9;
+                    case 9: return [3 /*break*/, 10];
+                    case 10: 
+                    // why?
+                    return [2 /*return*/];
                 }
             });
         });

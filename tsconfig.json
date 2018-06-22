@@ -3,17 +3,18 @@
     "module": "commonjs",
     "target": "es5",
     "outDir": "dist",
-    "lib": [ "es2015", "DOM" ],
+    "lib": ["es2015", "dom"],
     "rootDir": "src",
     "noImplicitAny": false,
     "sourceMap": true,
-    "types": ["node"],
+    "types": ["node", "jest"],
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true
   },
   "exclude": [
     "node_modules",
     "./src/**/*.spec.ts",
-    "./src/__test__"
+    "./src/__test__",
+    "./test/**/*"
   ]
 }

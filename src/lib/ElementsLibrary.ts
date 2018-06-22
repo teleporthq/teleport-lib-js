@@ -1,8 +1,12 @@
-import * as fs from 'fs-jetpack'
-import * as isUrl from 'is-url'
-import fetch from 'node-fetch'
 import ElementsLibraryTargetMapping from './ElementsLibraryTargetMapping'
 import Target from './Target'
+
+export interface LibraryDefinition {
+  name: string
+  version: string
+  type: string
+  elements: {}
+}
 
 export default class ElementsLibrary {
   public name: string
@@ -13,8 +17,12 @@ export default class ElementsLibrary {
   public targets: object = {}
   public targetMapping: object = {}
 
-  constructor (libraryDefinition: object) {
-    Object.assign(this, libraryDefinition)
+  constructor(libraryDefinition: LibraryDefinition) {
+    const { name, version, type, elements } = libraryDefinition
+    this.name = name
+    this.version = version
+    this.type = type
+    this.elements = elements
   }
 
   /**
@@ -64,7 +72,7 @@ export default class ElementsLibrary {
   }
 
   /**
-   * 
+   *
    * @param guiData sets up gui data to be used by the Teleport Playground Inspector
    */
   public useGui(guiData): void {

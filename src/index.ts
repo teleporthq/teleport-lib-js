@@ -5,7 +5,7 @@ import * as fetch from 'isomorphic-fetch'
 import Target from './lib/Target'
 import Generator from './lib/Generator'
 import Publisher from './lib/Publisher'
-import ElementsLibrary from './lib/ElementsLibrary'
+import ElementsLibrary, { LibraryDefinition } from './lib/ElementsLibrary'
 import ElementsLibraryTargetMapping from './lib/ElementsLibraryTargetMapping'
 import transformers from './transformers'
 
@@ -28,8 +28,12 @@ class TeleportLib {
   // ------------------------------------------------------------
 
   public async readPluginDefinitionFromFile(path: string): Promise<any> {
-    // tslint:disable-next-line:max-line-length
-    if (typeof window !== 'undefined') throw new Error('reading from files can only be used when lib is used in Node, not within a browser')
+    if (typeof window !== 'undefined')
+      throw new Error('reading from files can only be used when lib is used in Node, not within a browser')
+
+    if (!fs.existsSync(path))
+      throw new Error(`path \`${path}\` does not exist`)
+
     return new Promise((resolve, reject) => {
       try {
         const content = fs.readFileSync(path)
@@ -41,14 +45,20 @@ class TeleportLib {
     })
   }
 
-  public async readPluginDefinitionFromUrl(url: string): Promise<any> {
-    const response = await fetch(url)
+  public async readPluginDefinitionFromUrl(url: string) {
+    try {
+      const response = await fetch(url)
+      if (response.status !== 200)
+        throw new Error(`Could not download ${url}: ${response.statusText}`)
 
-    if (response.status !== 200) throw new Error(`Could not download ${url}: ${response.statusText}`)
-    const data = await response.json()
-    if (! data) throw new Error(`Could not download ${url}: EMPTY RESPONSE`)
+      const data = await response.json()
+      if (!data)
+        throw new Error(`Could not download ${url}: EMPTY RESPONSE`)
 
-    return data
+      return data
+    } catch (error) {
+      throw new Error(error)
+    }
   }
 
   // ------------------------------------------------------------
@@ -60,12 +70,15 @@ class TeleportLib {
       case 'string':
         if (isUrl(plugin)) {
           this.usePlugin(await this.readPluginDefinitionFromUrl(plugin as string))
-        } else if (typeof window === 'undefined' && fs.existsSync(plugin)) {
-          this.usePlugin(await this.readPluginDefinitionFromFile(plugin as string))
         } else {
-          this.usePlugin(await this.readPluginDefinitionFromUrl(`https://storage.googleapis.com/teleport-definitions/${plugin}.json`))
-          // throw new Error(`plugin sent as string is neither a valid url, nor a file: ${plugin}`)
+          this.usePlugin(await this.readPluginDefinitionFromFile(plugin as string))
         }
+        // else {
+        //   console.log('')
+        //   // tslint:disable-next-line:max-line-length
+        //   this.usePlugin(await this.readPluginDefinitionFromUrl(`https://storage.googleapis.com/teleport-definitions/${plugin}.json`))
+        //   // throw new Error(`plugin sent as string is neither a valid url, nor a file: ${plugin}`)
+        // }
         break
       case 'object':
         if (Array.isArray(plugin)) {
@@ -77,7 +90,7 @@ class TeleportLib {
         }
         break
     }
-
+    // why?
     return
   }
 
@@ -107,7 +120,7 @@ class TeleportLib {
   // libraries
   // ------------------------------------------------------------
 
-  public useLibrary(libraryDefinition: object): TeleportLib {
+  public useLibrary(libraryDefinition: LibraryDefinition): TeleportLib {
     const library = new ElementsLibrary(libraryDefinition)
     this.libraries[library.name] = library
     return this

@@ -38,7 +38,11 @@
     "ban-types": [false, ["Function"]],
     "curly": false,
     "no-empty-interface": false,
-    "interface-name": [true, "never-prefix"]
+    "interface-name": [true, "never-prefix"],
+    "variable-name": [true,
+      "check-format",
+      "allow-leading-underscore"
+    ]
   },
   "rulesDirectory": []
 }
