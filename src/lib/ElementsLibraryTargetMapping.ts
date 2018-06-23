@@ -26,7 +26,7 @@ export default class ElementsLibraryTargetMapping {
     if (this.extends) {
       const extendedMapping = TeleportLib.mapping(this.extends as string)
       // tslint:disable-next-line:max-line-length
-      if (! extendedMapping) throw new Error(`Mapping '${this.name}' depends on '${this.extends}' which was not yet registered for target '${this.target.name}' Please register it before the current one`)
+      if (!extendedMapping) throw new Error(`Mapping '${this.name}' depends on '${this.extends}' which was not yet registered for target '${this.target.name}' Please register it before the current one`)
 
       this.extends = extendedMapping
 
