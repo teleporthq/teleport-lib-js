@@ -1,7 +1,7 @@
 import * as fs from 'fs'
 import * as fetch from 'isomorphic-fetch'
 
-import teleport from '../../src'
+import Teleport from '../../src'
 import Publisher from '../../src/lib/Publisher'
 import ElementsLibrary from '../../src/lib/ElementsLibrary'
 import Mapping from '../../src/lib/ElementsLibraryTargetMapping'
@@ -24,7 +24,7 @@ const getFromRepo = async (file) => {
     const url = `${coreRepo}${file}`
     const response = await fetch(url)
     if (response.status !== 200)
-      throw new Error(`--- Could not download ${url}: ${response.statusText}`)
+      throw new Error(`Could not download ${url}: ${response.statusText}`)
 
     const data = await response.json()
 
@@ -36,7 +36,7 @@ const getFromRepo = async (file) => {
     throw new Error(error)
   }
 }
-
+let teleport: Teleport | null
 let definitions = {}
 let mappingHtml = {}
 let mappingReact = {}
@@ -49,6 +49,7 @@ beforeAll(async () => {
 })
 
 describe('Teleport', () => {
+  teleport = new Teleport()
   describe('utils', () => {
     it('should reject because of invalid plugin path (readPluginDefinitionFromFile)', () => {
       expect(teleport.readPluginDefinitionFromFile(invalidPath))
@@ -69,6 +70,7 @@ describe('Teleport', () => {
   })
 
   describe('libraries', () => {
+    teleport = new Teleport()
     it('should return an instance of teleport (useLibrary)', async () => {
       expect(teleport.useLibrary(new ElementsLibrary(localDefinitions)))
         .toEqual(teleport)
@@ -81,6 +83,7 @@ describe('Teleport', () => {
   })
 
   describe('publishers', () => {
+    teleport = new Teleport()
     const publisher = new Publisher('test')
     it('should return an instance of teleport', async () => {
       expect(teleport.usePublisher(publisher))
@@ -92,22 +95,33 @@ describe('Teleport', () => {
     })
   })
 
-  describe('mappings', () => {
-    it('should throw an error for mapping dependency (useMapping)', async () => {
-      expect(() => teleport.useMapping(mappingReact))
+  describe('plugins', () => {
+    teleport = new Teleport()
+    it('should throw an unvalid plugin error (usePlugin)', async () => {
+      const unvalidPlugin = { type: 'unvalid' }
+      expect(() => teleport.usePlugin(unvalidPlugin))
         .toThrow()
     })
+    it('should return an instance of teleport (use)', async () => {
+      expect(await teleport.use(mappingHtml))
+        .toEqual(teleport)
+    })
+  })
 
+  describe('mappings', () => {
+    teleport = new Teleport()
+    it('should throw an error for mapping dependency (useMapping)', async () => {
+      expect(() => new Teleport().useMapping(mappingReact))
+        .toThrow()
+    })
     it('should return an instance of teleport (useMapping)', async () => {
       expect(teleport.useMapping(mappingHtml))
         .toEqual(teleport)
     })
-
     it('should return an instance of teleport / mapping extension (useMapping)', async () => {
       expect(teleport.useMapping(mappingReact))
         .toEqual(teleport)
     })
-
     it('should return a mapping (mapping)', async () => {
       expect(teleport.mapping('teleport-elements-core-react').name)
         .toEqual('teleport-elements-core-react')

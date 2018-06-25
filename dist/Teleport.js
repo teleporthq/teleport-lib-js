@@ -62,7 +62,6 @@ var TeleportLib = /** @class */ (function () {
     TeleportLib.prototype.readPluginDefinitionFromFile = function (path) {
         return __awaiter(this, void 0, Promise, function () {
             return __generator(this, function (_a) {
-                console.log('window', typeof window);
                 if (typeof window !== 'undefined')
                     throw new Error('reading from files can only be used when lib is used in Node, not within a browser');
                 if (!fs.existsSync(path))
@@ -81,11 +80,13 @@ var TeleportLib = /** @class */ (function () {
         });
     };
     TeleportLib.prototype.readPluginDefinitionFromUrl = function (url) {
-        return __awaiter(this, void 0, Promise, function () {
-            var response, data;
+        return __awaiter(this, void 0, void 0, function () {
+            var response, data, error_1;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, fetch(url)];
+                    case 0:
+                        _a.trys.push([0, 3, , 4]);
+                        return [4 /*yield*/, fetch(url)];
                     case 1:
                         response = _a.sent();
                         if (response.status !== 200)
@@ -96,6 +97,10 @@ var TeleportLib = /** @class */ (function () {
                         if (!data)
                             throw new Error("Could not download " + url + ": EMPTY RESPONSE");
                         return [2 /*return*/, data];
+                    case 3:
+                        error_1 = _a.sent();
+                        throw new Error(error_1);
+                    case 4: return [2 /*return*/];
                 }
             });
         });
@@ -104,7 +109,7 @@ var TeleportLib = /** @class */ (function () {
     // plugins
     // ------------------------------------------------------------
     TeleportLib.prototype.use = function (plugin) {
-        return __awaiter(this, void 0, Promise, function () {
+        return __awaiter(this, void 0, void 0, function () {
             var _this = this;
             var _a, _b, _c;
             return __generator(this, function (_d) {
@@ -129,14 +134,7 @@ var TeleportLib = /** @class */ (function () {
                     case 4:
                         _c.apply(this, [_d.sent()]);
                         _d.label = 5;
-                    case 5: 
-                    // else {
-                    //   console.log('')
-                    //   // tslint:disable-next-line:max-line-length
-                    //   this.usePlugin(await this.readPluginDefinitionFromUrl(`https://storage.googleapis.com/teleport-definitions/${plugin}.json`))
-                    //   // throw new Error(`plugin sent as string is neither a valid url, nor a file: ${plugin}`)
-                    // }
-                    return [3 /*break*/, 10];
+                    case 5: return [3 /*break*/, 10];
                     case 6:
                         if (!Array.isArray(plugin)) return [3 /*break*/, 8];
                         return [4 /*yield*/, Promise.mapSeries(plugin, function (pluginItem) { return __awaiter(_this, void 0, Promise, function () {
@@ -154,7 +152,7 @@ var TeleportLib = /** @class */ (function () {
                         this.usePlugin(plugin);
                         _d.label = 9;
                     case 9: return [3 /*break*/, 10];
-                    case 10: return [2 /*return*/];
+                    case 10: return [2 /*return*/, this];
                 }
             });
         });
@@ -177,7 +175,7 @@ var TeleportLib = /** @class */ (function () {
                 this.useGui(pluginData);
                 break;
             default:
-                console.error('unrecognised plugin type:', pluginData);
+                throw new Error('unrecognised plugin type:' + pluginData);
         }
     };
     // ------------------------------------------------------------
@@ -195,7 +193,7 @@ var TeleportLib = /** @class */ (function () {
     // mappings
     // ------------------------------------------------------------
     TeleportLib.prototype.useMapping = function (mappingData) {
-        var map = new ElementsLibraryTargetMapping_1.default(mappingData);
+        var map = new ElementsLibraryTargetMapping_1.default(mappingData, this);
         this.mappings[map.name] = map;
         if (!this.targets[map.target]) {
             this.useTarget(map.target);
@@ -264,15 +262,5 @@ var TeleportLib = /** @class */ (function () {
     };
     return TeleportLib;
 }());
-exports.default = new TeleportLib();
-var Generator_1 = require("./lib/Generator");
-exports.Generator = Generator_1.default;
-var Publisher_1 = require("./lib/Publisher");
-exports.Publisher = Publisher_1.default;
-var Component_1 = require("./lib/Generator/Component");
-exports.ComponentGenerator = Component_1.default;
-var Project_1 = require("./lib/Generator/Project");
-exports.ProjectGenerator = Project_1.default;
-var FileSet_1 = require("./lib/Generator/FileSet");
-exports.FileSet = FileSet_1.default;
-//# sourceMappingURL=index.js.map
+exports.default = TeleportLib;
+//# sourceMappingURL=Teleport.js.map

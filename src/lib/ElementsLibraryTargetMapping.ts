@@ -1,8 +1,9 @@
 import Target from './Target'
 import ElementsLibrary from './ElementsLibrary'
-import TeleportLib from '../index'
+import Teleport from '../index'
 
 export default class ElementsLibraryTargetMapping {
+  private _teleport: Teleport
   public name: string
   public version: string
   public type: string
@@ -11,7 +12,8 @@ export default class ElementsLibraryTargetMapping {
   public extends: string | ElementsLibraryTargetMapping
   public maps: object = {}
 
-  constructor (libraryMappingDefinition: object) {
+  constructor(libraryMappingDefinition: object, instance: Teleport) {
+    this._teleport = instance
     Object.assign(this, libraryMappingDefinition)
   }
 
@@ -22,9 +24,9 @@ export default class ElementsLibraryTargetMapping {
   public setTarget(target: Target): void {
     this.target = target
 
-    // computed the extended map if there is one
+    // compute the extended map if there is one
     if (this.extends) {
-      const extendedMapping = TeleportLib.mapping(this.extends as string)
+      const extendedMapping = this._teleport.mapping(this.extends as string)
       // tslint:disable-next-line:max-line-length
       if (!extendedMapping) throw new Error(`Mapping '${this.name}' depends on '${this.extends}' which was not yet registered for target '${this.target.name}' Please register it before the current one`)
 

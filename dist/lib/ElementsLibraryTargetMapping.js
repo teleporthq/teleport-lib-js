@@ -8,10 +8,10 @@ var __assign = (this && this.__assign) || Object.assign || function(t) {
     return t;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var index_1 = require("../index");
 var ElementsLibraryTargetMapping = /** @class */ (function () {
-    function ElementsLibraryTargetMapping(libraryMappingDefinition) {
+    function ElementsLibraryTargetMapping(libraryMappingDefinition, instance) {
         this.maps = {};
+        this._teleport = instance;
         Object.assign(this, libraryMappingDefinition);
     }
     /**
@@ -20,9 +20,9 @@ var ElementsLibraryTargetMapping = /** @class */ (function () {
      */
     ElementsLibraryTargetMapping.prototype.setTarget = function (target) {
         this.target = target;
-        // computed the extended map if there is one
+        // compute the extended map if there is one
         if (this.extends) {
-            var extendedMapping = index_1.default.mapping(this.extends);
+            var extendedMapping = this._teleport.mapping(this.extends);
             // tslint:disable-next-line:max-line-length
             if (!extendedMapping)
                 throw new Error("Mapping '" + this.name + "' depends on '" + this.extends + "' which was not yet registered for target '" + this.target.name + "' Please register it before the current one");
