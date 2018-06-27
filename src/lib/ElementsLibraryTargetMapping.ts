@@ -1,6 +1,6 @@
 import Target from './Target'
 import ElementsLibrary from './ElementsLibrary'
-import Teleport from '../index'
+import Teleport from '../Teleport'
 
 export default class ElementsLibraryTargetMapping {
   private _teleport: Teleport

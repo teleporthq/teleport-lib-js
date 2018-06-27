@@ -187,6 +187,8 @@ var TeleportLib = /** @class */ (function () {
         return this;
     };
     TeleportLib.prototype.library = function (libraryName) {
+        if (!this.libraries[libraryName])
+            throw new Error("Library " + libraryName + " has not been loaded");
         return this.libraries[libraryName];
     };
     // ------------------------------------------------------------
@@ -223,7 +225,7 @@ var TeleportLib = /** @class */ (function () {
     };
     TeleportLib.prototype.target = function (targetName) {
         if (!this.targets[targetName])
-            throw new Error("No target named '" + targetName + "' exists.\n    Did you register a mapping or a generator for this target?");
+            throw new Error("No target named '" + targetName + "' exists. Did you register a mapping or a generator for this target?");
         return this.targets[targetName];
     };
     // ------------------------------------------------------------

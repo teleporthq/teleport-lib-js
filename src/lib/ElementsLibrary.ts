@@ -1,21 +1,18 @@
 import ElementsLibraryTargetMapping from './ElementsLibraryTargetMapping'
 import Target from './Target'
-
-export interface LibraryDefinition {
-  name: string
-  version: string
-  type: string
-  elements: {}
-}
+import { Mapping, LibraryDefinition } from '../types/index'
 
 export default class ElementsLibrary {
   public name: string
   public version: string
   public type: string
   public elements: any
-  public mappings: object = {}
-  public targets: object = {}
-  public targetMapping: object = {}
+  public mappings: {
+    [key: string]: ElementsLibraryTargetMapping
+  } = {}
+  public targets: {
+    [key: string]: Target
+  } = {}
 
   constructor(libraryDefinition: LibraryDefinition) {
     const { name, version, type, elements } = libraryDefinition
@@ -43,7 +40,6 @@ export default class ElementsLibrary {
     this.mappings[mapping.name] = mapping
     const target = (mapping.target as Target)
     this.targets[target.name] = target
-    this.targetMapping[target.name] = mapping
     mapping.setLibrary(this)
   }
 
@@ -59,16 +55,8 @@ export default class ElementsLibrary {
    * retrieves a target for the current elements library
    * @param targetName
    */
-  public target(targetName: string): Target | null {
+  public target(targetName: string): Target | undefined {
     return this.targets[targetName]
-  }
-
-  /**
-   * retrieves all mappings of the current library for a target
-   * @param targetName
-   */
-  public mapping(targetName: string): ElementsLibraryTargetMapping | null {
-    return this.targetMapping[targetName]
   }
 
   /**

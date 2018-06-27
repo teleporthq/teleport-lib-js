@@ -4,7 +4,6 @@ var ElementsLibrary = /** @class */ (function () {
     function ElementsLibrary(libraryDefinition) {
         this.mappings = {};
         this.targets = {};
-        this.targetMapping = {};
         var name = libraryDefinition.name, version = libraryDefinition.version, type = libraryDefinition.type, elements = libraryDefinition.elements;
         this.name = name;
         this.version = version;
@@ -28,7 +27,6 @@ var ElementsLibrary = /** @class */ (function () {
         this.mappings[mapping.name] = mapping;
         var target = mapping.target;
         this.targets[target.name] = target;
-        this.targetMapping[target.name] = mapping;
         mapping.setLibrary(this);
     };
     /**
@@ -44,13 +42,6 @@ var ElementsLibrary = /** @class */ (function () {
      */
     ElementsLibrary.prototype.target = function (targetName) {
         return this.targets[targetName];
-    };
-    /**
-     * retrieves all mappings of the current library for a target
-     * @param targetName
-     */
-    ElementsLibrary.prototype.mapping = function (targetName) {
-        return this.targetMapping[targetName];
     };
     /**
      *

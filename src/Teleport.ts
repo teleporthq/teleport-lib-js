@@ -5,9 +5,10 @@ import * as fetch from 'isomorphic-fetch'
 import Target from './lib/Target'
 import Generator from './lib/Generator'
 import Publisher from './lib/Publisher'
-import ElementsLibrary, { LibraryDefinition } from './lib/ElementsLibrary'
+import ElementsLibrary from './lib/ElementsLibrary'
 import ElementsLibraryTargetMapping from './lib/ElementsLibraryTargetMapping'
 import transformers from './transformers'
+import { Mapping, LibraryDefinition } from './types/index'
 
 let fs = null
 if (typeof window === 'undefined') {
@@ -91,10 +92,10 @@ export default class TeleportLib {
   public usePlugin(pluginData: object): void {
     switch ((pluginData as any).type) {
       case 'library':
-        this.useLibrary(pluginData)
+        this.useLibrary(pluginData as LibraryDefinition)
         break
       case 'mapping':
-        this.useMapping(pluginData)
+        this.useMapping(pluginData as Mapping)
         break
       case 'generator':
         this.useGenerator(pluginData as Generator)
@@ -120,7 +121,10 @@ export default class TeleportLib {
     return this
   }
 
-  public library(libraryName: string): ElementsLibrary | null | undefined {
+  public library(libraryName: string): ElementsLibrary {
+    if (!this.libraries[libraryName]) 
+      throw new Error(`Library ${libraryName} has not been loaded`)
+    
     return this.libraries[libraryName]
   }
 
@@ -128,7 +132,7 @@ export default class TeleportLib {
   // mappings
   // ------------------------------------------------------------
 
-  public useMapping(mappingData: object): TeleportLib {
+  public useMapping(mappingData: Mapping): TeleportLib {
     const map = new ElementsLibraryTargetMapping(mappingData, this)
 
     this.mappings[map.name] = map
@@ -166,8 +170,9 @@ export default class TeleportLib {
   }
 
   public target(targetName: string): Target | null | undefined {
-    if (! this.targets[targetName]) throw new Error(`No target named '${targetName}' exists.
-    Did you register a mapping or a generator for this target?`)
+    if (!this.targets[targetName])
+      throw new Error(`No target named '${targetName}' exists. Did you register a mapping or a generator for this target?`)
+    
     return this.targets[targetName]
   }
 

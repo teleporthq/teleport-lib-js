@@ -65,7 +65,7 @@ export default class Target {
   }
 
   get generator(): Generator {
-    if (! this._generator) throw new Error(`No generator registered for target ${this.name}`)
+    if (!this._generator) throw new Error(`No generator registered for target ${this.name}`)
 
     return this._generator
   }
