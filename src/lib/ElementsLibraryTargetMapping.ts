@@ -1,10 +1,9 @@
 import Target from './Target'
 import ElementsLibrary from './ElementsLibrary'
 import Teleport from '../Teleport'
-import TeleportLight from '../TeleportLight';
+import TeleportLight from '../TeleportLight'
 
 export default class ElementsLibraryTargetMapping {
-  private _teleport: Teleport | TeleportLight
   public name: string
   public version: string
   public type: string
@@ -12,9 +11,10 @@ export default class ElementsLibraryTargetMapping {
   public target: string | Target
   public extends: string | ElementsLibraryTargetMapping
   public maps: object = {}
+  private teleport: Teleport | TeleportLight
 
   constructor(libraryMappingDefinition: object, instance: Teleport | TeleportLight) {
-    this._teleport = instance
+    this.teleport = instance
     Object.assign(this, libraryMappingDefinition)
   }
 
@@ -27,15 +27,19 @@ export default class ElementsLibraryTargetMapping {
 
     // compute the extended map if there is one
     if (this.extends) {
-      const extendedMapping = this._teleport.mapping(this.extends as string)
-      // tslint:disable-next-line:max-line-length
-      if (!extendedMapping) throw new Error(`Mapping '${this.name}' depends on '${this.extends}' which was not yet registered for target '${this.target.name}' Please register it before the current one`)
+      const extendedMapping = this.teleport.mapping(this.extends as string)
+      if (!extendedMapping)
+        throw new Error(
+          `Mapping '${this.name}' depends on '${this.extends}' which was not yet registered for target '${
+            this.target.name
+          }' Please register it before the current one`
+        )
 
       this.extends = extendedMapping
 
       this.maps = {
         ...this.extends.maps,
-        ...this.maps
+        ...this.maps,
       }
     }
   }
@@ -49,18 +53,18 @@ export default class ElementsLibraryTargetMapping {
   }
 
   /**
-   * applies data from a generic object
-   * @param libData
-   */
-  private applyData(libData: object): void {
-    Object.assign(this, libData)
-  }
-
-  /**
    * retrieves the mapping of a specific element for the current target mapping
    * @param type
    */
   public map(type: string): object | null {
     return this.maps[type]
+  }
+
+  /**
+   * applies data from a generic object
+   * @param libData
+   */
+  public applyData(libData: object): void {
+    Object.assign(this, libData)
   }
 }

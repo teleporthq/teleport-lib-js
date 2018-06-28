@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var jsstocss = require("./jsstocss");
 var styleTransformers = {
-    jsstocss: jsstocss
+    jsstocss: jsstocss,
 };
 exports.default = styleTransformers;
 //# sourceMappingURL=index.js.map

@@ -8,7 +8,7 @@ function stylesheet(styles) {
     var styleSheet = jss_1.default.createStyleSheet(styles, { generateClassName: generateClassName });
     return {
         classNames: styleSheet.classes,
-        css: styleSheet.toString()
+        css: styleSheet.toString(),
     };
 }
 exports.stylesheet = stylesheet;

@@ -8,7 +8,6 @@ export default class ComponentGenerator {
   }
 
   public generate(component: any, options: any): string {
-    // tslint:disable-next-line:max-line-length
     throw new Error("COMPONENT GENERATOR'S GENERATE METHOD SHOULD NOT BE INVOKED DIRECTLY! Please use a target specific generator")
   }
 }

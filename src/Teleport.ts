@@ -8,7 +8,7 @@ import Publisher from './lib/Publisher'
 import ElementsLibrary from './lib/ElementsLibrary'
 import ElementsLibraryTargetMapping from './lib/ElementsLibraryTargetMapping'
 import transformers from './transformers'
-import { Mapping, LibraryDefinition, GuiData } from './types/index'
+import { Mapping, LibraryDefinition, GuiData } from './types'
 
 export default class Teleport {
   public libraries: object = {}
@@ -23,13 +23,10 @@ export default class Teleport {
   // ------------------------------------------------------------
 
   public async readPluginDefinitionFromFile(path: string): Promise<any> {
-    if (typeof window !== 'undefined')
-      throw new Error('reading from files can only be used when lib is used in Node, not within a browser')
+    if (typeof window !== 'undefined') throw new Error('reading from files can only be used when lib is used in Node, not within a browser')
 
-    // tslint:disable-next-line:no-var-requires
     const fs = require('fs')
-    if (!fs.existsSync(path))
-      throw new Error(`path \`${path}\` does not exist`)
+    if (!fs.existsSync(path)) throw new Error(`path \`${path}\` does not exist`)
 
     return new Promise((resolve, reject) => {
       try {
@@ -45,12 +42,10 @@ export default class Teleport {
   public async readPluginDefinitionFromUrl(url: string) {
     try {
       const response = await fetch(url)
-      if (response.status !== 200)
-        throw new Error(`Could not download ${url}: ${response.statusText}`)
+      if (response.status !== 200) throw new Error(`Could not download ${url}: ${response.statusText}`)
 
       const data = await response.json()
-      if (!data)
-        throw new Error(`Could not download ${url}: EMPTY RESPONSE`)
+      if (!data) throw new Error(`Could not download ${url}: EMPTY RESPONSE`)
 
       return data
     } catch (error) {
@@ -74,9 +69,12 @@ export default class Teleport {
 
       case 'object':
         if (Array.isArray(plugin)) {
-          await BluebirdPromise.mapSeries(plugin, async (pluginItem): Promise<any> => {
-            return await this.use(pluginItem)
-          })
+          await BluebirdPromise.mapSeries(
+            plugin,
+            async (pluginItem): Promise<any> => {
+              return this.use(pluginItem)
+            }
+          )
         } else {
           this.usePlugin(plugin as object)
         }
@@ -118,9 +116,8 @@ export default class Teleport {
   }
 
   public library(libraryName: string): ElementsLibrary {
-    if (!this.libraries[libraryName]) 
-      throw new Error(`Library ${libraryName} has not been loaded`)
-    
+    if (!this.libraries[libraryName]) throw new Error(`Library ${libraryName} has not been loaded`)
+
     return this.libraries[libraryName]
   }
 
@@ -133,7 +130,7 @@ export default class Teleport {
 
     this.mappings[map.name] = map
 
-    if (!this.targets[(map.target as string)]) {
+    if (!this.targets[map.target as string]) {
       this.useTarget(map.target as string)
     }
 
@@ -166,9 +163,8 @@ export default class Teleport {
   }
 
   public target(targetName: string): Target | null | undefined {
-    if (!this.targets[targetName])
-      throw new Error(`No target named '${targetName}' exists.Did you register a mapping or a generator for this target?`)
-    
+    if (!this.targets[targetName]) throw new Error(`No target named '${targetName}' exists.Did you register a mapping or a generator for this target?`)
+
     return this.targets[targetName]
   }
 
@@ -177,7 +173,7 @@ export default class Teleport {
   // ------------------------------------------------------------
 
   public useGenerator(generator: Generator): Teleport {
-    if (! this.targets[generator.targetName]) {
+    if (!this.targets[generator.targetName]) {
       this.useTarget(generator.targetName)
     }
 
@@ -209,9 +205,8 @@ export default class Teleport {
     const { library: libraryName } = guiData
     const library = this.library(libraryName)
 
-    if (!library)
-      throw new Error(`Library ${libraryName} was not found for gui package ${guiData.name}`)
-    
+    if (!library) throw new Error(`Library ${libraryName} was not found for gui package ${guiData.name}`)
+
     library.useGui(guiData)
     return this
   }

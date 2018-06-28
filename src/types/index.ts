@@ -9,7 +9,7 @@ export interface LibraryDefinition {
   type: string
   elements: {
     [key: string]: {
-      'defaults': {
+      defaults: {
         [key: string]: {} | string
       }
     }

@@ -5,27 +5,22 @@ import { LibraryDefinition, Mapping } from './types'
 import ElementsLibraryTargetMapping from './lib/ElementsLibraryTargetMapping'
 
 export default class TeleportLight {
-  elementsLibrary: ElementsLibrary
-  mappings: {
+  public elementsLibrary: ElementsLibrary
+  public mappings: {
     [key: string]: ElementsLibraryTargetMapping
   } = {}
-  target: string
-  generator: Generator
+  public target: string
+  public generator: Generator
 
-  constructor(
-    library: LibraryDefinition,
-    mappings: Mapping | Mapping[],
-    generator: Generator
-  ) {
+  constructor(library: LibraryDefinition, mappings: Mapping | Mapping[], generator: Generator) {
     this.setLibrary(library)
     this.setMappings(mappings)
     this.setGenerator(generator)
   }
-  
+
   public setLibrary(library) {
-    if (this.elementsLibrary)
-      throw new Error(`Library is already set: ${library.name}`)
-    
+    if (this.elementsLibrary) throw new Error(`Library is already set: ${library.name}`)
+
     this.elementsLibrary = new ElementsLibrary(library)
   }
 
@@ -33,24 +28,23 @@ export default class TeleportLight {
     let maps = null
     for (const mapping of mappings) {
       const targetMapping = new ElementsLibraryTargetMapping(mapping, this)
-      
+
       // do not allow mapping override
-      if (this.mappings[targetMapping.name]) 
-        throw new Error(`Mapping ${targetMapping.name} is already set`)
-      
-      // check library dependency 
+      if (this.mappings[targetMapping.name]) throw new Error(`Mapping ${targetMapping.name} is already set`)
+
+      // check library dependency
       if (this.elementsLibrary.name !== targetMapping.library)
         throw new Error(`\`this.elementsLibrary.name\` mapping depends on \`this.elementsLibrary.name\` library`)
-      
+
       // check mapping dependency
       if (targetMapping.extends) {
         if (!this.mappings[targetMapping.extends as string])
           throw new Error(`\`${targetMapping.name}\` mapping extends a missing mapping (${targetMapping.extends})`)
-    
+
         // extend
         maps = {
           ...this.mappings[targetMapping.extends as string],
-          ...targetMapping.maps
+          ...targetMapping.maps,
         }
       }
 

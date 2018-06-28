@@ -31,7 +31,7 @@ var TeleportLight = /** @class */ (function () {
             // do not allow mapping override
             if (this.mappings[targetMapping.name])
                 throw new Error("Mapping " + targetMapping.name + " is already set");
-            // check library dependency 
+            // check library dependency
             if (this.elementsLibrary.name !== targetMapping.library)
                 throw new Error("`this.elementsLibrary.name` mapping depends on `this.elementsLibrary.name` library");
             // check mapping dependency

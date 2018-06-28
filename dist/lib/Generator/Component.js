@@ -5,7 +5,6 @@ var ComponentGenerator = /** @class */ (function () {
         this.generator = generator;
     }
     ComponentGenerator.prototype.generate = function (component, options) {
-        // tslint:disable-next-line:max-line-length
         throw new Error("COMPONENT GENERATOR'S GENERATE METHOD SHOULD NOT BE INVOKED DIRECTLY! Please use a target specific generator");
     };
     return ComponentGenerator;

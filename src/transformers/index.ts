@@ -1,7 +1,7 @@
 import styleTransformers from './styles'
 
 const transformers = {
-  styles: styleTransformers
+  styles: styleTransformers,
 }
 
 export default transformers

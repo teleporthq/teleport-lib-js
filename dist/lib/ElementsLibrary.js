@@ -30,13 +30,6 @@ var ElementsLibrary = /** @class */ (function () {
         mapping.setLibrary(this);
     };
     /**
-     * applies data from a generic object to the current library
-     * @param libData
-     */
-    ElementsLibrary.prototype.applyData = function (libData) {
-        Object.assign(this, libData);
-    };
-    /**
      * retrieves a target for the current elements library
      * @param targetName
      */
@@ -47,11 +40,11 @@ var ElementsLibrary = /** @class */ (function () {
      *
      * @param guiData sets up gui data to be used by the Teleport Playground Inspector
      */
+    // @todo should this stay in the core class?
     ElementsLibrary.prototype.useGui = function (guiData) {
         var _this = this;
-        if (guiData.library !== this.name) {
+        if (guiData.library !== this.name)
             throw new Error("Library gui " + guiData.library + " not compatible with " + this.name);
-        }
         if (!guiData.elements)
             throw new Error("invalid gui defintion for " + this.name);
         Object.keys(guiData.elements).map(function (elementName) {
@@ -60,6 +53,13 @@ var ElementsLibrary = /** @class */ (function () {
                 return;
             element.gui = guiData.elements[elementName];
         });
+    };
+    /**
+     * applies data from a generic object to the current library
+     * @param libData
+     */
+    ElementsLibrary.prototype.applyData = function (libData) {
+        Object.assign(this, libData);
     };
     return ElementsLibrary;
 }());

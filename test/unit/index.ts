@@ -1,9 +1,7 @@
-import * as fs from 'fs'
-
 import Teleport from '../../src'
 import Publisher from '../../src/lib/Publisher'
 import ElementsLibrary from '../../src/lib/ElementsLibrary'
-import { Mapping, LibraryDefinition } from '../../src/types/index'
+import { Mapping, LibraryDefinition } from '../../src/types'
 import Target from '../../src/lib/Target'
 import config from '../config'
 import getFromRepo from './utils/getFromRepo'

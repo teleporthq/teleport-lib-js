@@ -4,7 +4,6 @@ import ElementsLibrary from './ElementsLibrary'
 
 export default class Target {
   public name: string
-  public _generator: Generator
 
   /**
    * all mappings defined for this target
@@ -20,6 +19,8 @@ export default class Target {
     [key: string]: ElementsLibraryTargetMapping
   } = {}
 
+  private targetGenerator: Generator
+
   constructor(name: string) {
     this.name = name
   }
@@ -30,14 +31,14 @@ export default class Target {
    */
   public useMapping(mapping: ElementsLibraryTargetMapping): void {
     this.mappings[mapping.name] = mapping
-    this.mappingsByLibrary[(mapping.library as ElementsLibrary).name || mapping.library as string] = mapping
+    this.mappingsByLibrary[(mapping.library as ElementsLibrary).name || (mapping.library as string)] = mapping
     mapping.setTarget(this)
   }
 
   public setGenerator(generator: Generator): void {
-    if (this._generator) throw new Error(`A Generator for target ${this.name} is already registered`)
+    if (this.targetGenerator) throw new Error(`A Generator for target ${this.name} is already registered`)
 
-    this._generator = generator
+    this.targetGenerator = generator
   }
 
   /**
@@ -69,8 +70,8 @@ export default class Target {
   }
 
   get generator(): Generator {
-    if (!this._generator) throw new Error(`No generator registered for target ${this.name}`)
+    if (!this.targetGenerator) throw new Error(`No generator registered for target ${this.name}`)
 
-    return this._generator
+    return this.targetGenerator
   }
 }

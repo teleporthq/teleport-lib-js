@@ -14,8 +14,8 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     function step(op) {
         if (f) throw new TypeError("Generator is already executing.");
         while (_) try {
-            if (f = 1, y && (t = y[op[0] & 2 ? "return" : op[0] ? "throw" : "next"]) && !(t = t.call(y, op[1])).done) return t;
-            if (y = 0, t) op = [0, t.value];
+            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+            if (y = 0, t) op = [op[0] & 2, t.value];
             switch (op[0]) {
                 case 0: case 1: t = op; break;
                 case 4: _.label++; return { value: op[1], done: false };
@@ -42,11 +42,6 @@ var Target_1 = require("./lib/Target");
 var ElementsLibrary_1 = require("./lib/ElementsLibrary");
 var ElementsLibraryTargetMapping_1 = require("./lib/ElementsLibraryTargetMapping");
 var transformers_1 = require("./transformers");
-var fs = null;
-if (typeof window === 'undefined') {
-    // tslint:disable-next-line:no-var-requires
-    fs = require('fs');
-}
 var Teleport = /** @class */ (function () {
     function Teleport() {
         this.libraries = {};
@@ -61,9 +56,11 @@ var Teleport = /** @class */ (function () {
     // ------------------------------------------------------------
     Teleport.prototype.readPluginDefinitionFromFile = function (path) {
         return __awaiter(this, void 0, void 0, function () {
+            var fs;
             return __generator(this, function (_a) {
                 if (typeof window !== 'undefined')
                     throw new Error('reading from files can only be used when lib is used in Node, not within a browser');
+                fs = require('fs');
                 if (!fs.existsSync(path))
                     throw new Error("path `" + path + "` does not exist");
                 return [2 /*return*/, new Promise(function (resolve, reject) {
@@ -110,8 +107,8 @@ var Teleport = /** @class */ (function () {
     // ------------------------------------------------------------
     Teleport.prototype.use = function (plugin) {
         return __awaiter(this, void 0, void 0, function () {
-            var _this = this;
             var _a, _b, _c;
+            var _this = this;
             return __generator(this, function (_d) {
                 switch (_d.label) {
                     case 0:
@@ -139,10 +136,7 @@ var Teleport = /** @class */ (function () {
                         if (!Array.isArray(plugin)) return [3 /*break*/, 8];
                         return [4 /*yield*/, BluebirdPromise.mapSeries(plugin, function (pluginItem) { return __awaiter(_this, void 0, void 0, function () {
                                 return __generator(this, function (_a) {
-                                    switch (_a.label) {
-                                        case 0: return [4 /*yield*/, this.use(pluginItem)];
-                                        case 1: return [2 /*return*/, _a.sent()];
-                                    }
+                                    return [2 /*return*/, this.use(pluginItem)];
                                 });
                             }); })];
                     case 7:
@@ -257,10 +251,10 @@ var Teleport = /** @class */ (function () {
     Teleport.prototype.useGui = function (guiData) {
         var libraryName = guiData.library;
         var library = this.library(libraryName);
-        if (!library) {
-            return console.error("Library " + libraryName + " was not found for gui package " + guiData.name);
-        }
+        if (!library)
+            throw new Error("Library " + libraryName + " was not found for gui package " + guiData.name);
         library.useGui(guiData);
+        return this;
     };
     return Teleport;
 }());

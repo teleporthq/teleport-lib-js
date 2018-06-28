@@ -11,7 +11,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var ElementsLibraryTargetMapping = /** @class */ (function () {
     function ElementsLibraryTargetMapping(libraryMappingDefinition, instance) {
         this.maps = {};
-        this._teleport = instance;
+        this.teleport = instance;
         Object.assign(this, libraryMappingDefinition);
     }
     /**
@@ -22,8 +22,7 @@ var ElementsLibraryTargetMapping = /** @class */ (function () {
         this.target = target;
         // compute the extended map if there is one
         if (this.extends) {
-            var extendedMapping = this._teleport.mapping(this.extends);
-            // tslint:disable-next-line:max-line-length
+            var extendedMapping = this.teleport.mapping(this.extends);
             if (!extendedMapping)
                 throw new Error("Mapping '" + this.name + "' depends on '" + this.extends + "' which was not yet registered for target '" + this.target.name + "' Please register it before the current one");
             this.extends = extendedMapping;
@@ -38,18 +37,18 @@ var ElementsLibraryTargetMapping = /** @class */ (function () {
         this.library = library;
     };
     /**
-     * applies data from a generic object
-     * @param libData
-     */
-    ElementsLibraryTargetMapping.prototype.applyData = function (libData) {
-        Object.assign(this, libData);
-    };
-    /**
      * retrieves the mapping of a specific element for the current target mapping
      * @param type
      */
     ElementsLibraryTargetMapping.prototype.map = function (type) {
         return this.maps[type];
+    };
+    /**
+     * applies data from a generic object
+     * @param libData
+     */
+    ElementsLibraryTargetMapping.prototype.applyData = function (libData) {
+        Object.assign(this, libData);
     };
     return ElementsLibraryTargetMapping;
 }());

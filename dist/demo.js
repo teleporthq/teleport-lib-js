@@ -14,8 +14,8 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     function step(op) {
         if (f) throw new TypeError("Generator is already executing.");
         while (_) try {
-            if (f = 1, y && (t = y[op[0] & 2 ? "return" : op[0] ? "throw" : "next"]) && !(t = t.call(y, op[1])).done) return t;
-            if (y = 0, t) op = [0, t.value];
+            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+            if (y = 0, t) op = [op[0] & 2, t.value];
             switch (op[0]) {
                 case 0: case 1: t = op; break;
                 case 4: _.label++; return { value: op[1], done: false };
@@ -36,14 +36,8 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 var _this = this;
 Object.defineProperty(exports, "__esModule", { value: true });
-var teleport_generator_react_1 = require("../../teleport-generator-react");
 var fetch = require("isomorphic-fetch");
-var TeleportLight_1 = require("./TeleportLight");
-var smallComponentJson = require('../../teleport-lib-js-dev/in/components/test.json');
 var coreRepo = 'https://gitlab.com/teleporthq/teleport-elements-core/raw/master/';
-var definitions;
-var mappingHtml;
-var mappingReact;
 function getFromRepo(file) {
     return __awaiter(this, void 0, void 0, function () {
         var url, response, data, error_1;
@@ -77,28 +71,29 @@ function getData() {
             switch (_a.label) {
                 case 0: return [4 /*yield*/, getFromRepo('definitions.json')];
                 case 1:
-                    definitions = _a.sent();
+                    _a.sent();
                     return [4 /*yield*/, getFromRepo('mapping-html.json')];
                 case 2:
-                    mappingHtml = _a.sent();
+                    _a.sent();
                     return [4 /*yield*/, getFromRepo('mapping-react.json')];
                 case 3:
-                    mappingReact = _a.sent();
+                    _a.sent();
                     return [2 /*return*/];
             }
         });
     });
 }
+;
 (function () { return __awaiter(_this, void 0, void 0, function () {
-    var teleport;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, getData()];
+            case 0: return [4 /*yield*/, getData()
+                // const teleport = new Teleport(definitions, [mappingHtml, mappingReact], new TeleportGeneratorReact())
+                // console.log(teleport.generator.componentGenerator.generate(smallComponentJson, {}))
+                // console.log(teleport.generator.projectGenerator.generate(smallComponentJson, {}))
+            ];
             case 1:
                 _a.sent();
-                teleport = new TeleportLight_1.default(definitions, [mappingHtml, mappingReact], new teleport_generator_react_1.default());
-                console.log(teleport.generator.componentGenerator.generate(smallComponentJson, {}));
-                console.log(teleport.generator.projectGenerator.generate(smallComponentJson, {}));
                 return [2 /*return*/];
         }
     });
