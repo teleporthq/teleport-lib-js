@@ -1,9 +1,10 @@
 import Target from './Target'
 import ElementsLibrary from './ElementsLibrary'
 import Teleport from '../Teleport'
+import TeleportLight from '../TeleportLight';
 
 export default class ElementsLibraryTargetMapping {
-  private _teleport: Teleport
+  private _teleport: Teleport | TeleportLight
   public name: string
   public version: string
   public type: string
@@ -12,7 +13,7 @@ export default class ElementsLibraryTargetMapping {
   public extends: string | ElementsLibraryTargetMapping
   public maps: object = {}
 
-  constructor(libraryMappingDefinition: object, instance: Teleport) {
+  constructor(libraryMappingDefinition: object, instance: Teleport | TeleportLight) {
     this._teleport = instance
     Object.assign(this, libraryMappingDefinition)
   }

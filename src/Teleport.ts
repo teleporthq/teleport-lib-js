@@ -1,4 +1,4 @@
-import * as Promise from "bluebird"
+import * as BluebirdPromise from 'bluebird'
 import * as isUrl from 'is-url'
 import * as fetch from 'isomorphic-fetch'
 
@@ -8,7 +8,7 @@ import Publisher from './lib/Publisher'
 import ElementsLibrary from './lib/ElementsLibrary'
 import ElementsLibraryTargetMapping from './lib/ElementsLibraryTargetMapping'
 import transformers from './transformers'
-import { Mapping, LibraryDefinition } from './types/index'
+import { Mapping, LibraryDefinition, GuiData } from './types/index'
 
 let fs = null
 if (typeof window === 'undefined') {
@@ -16,7 +16,7 @@ if (typeof window === 'undefined') {
   fs = require('fs')
 }
 
-export default class TeleportLib {
+export default class Teleport {
   public libraries: object = {}
   public mappings: object = {}
   public targets: object = {}
@@ -78,7 +78,7 @@ export default class TeleportLib {
 
       case 'object':
         if (Array.isArray(plugin)) {
-          await Promise.mapSeries(plugin, async (pluginItem): Promise<any> => {
+          await BluebirdPromise.mapSeries(plugin, async (pluginItem): Promise<any> => {
             return await this.use(pluginItem)
           })
         } else {
@@ -104,7 +104,7 @@ export default class TeleportLib {
         this.usePublisher(pluginData as Publisher)
         break
       case 'gui':
-        this.useGui(pluginData)
+        this.useGui(pluginData as GuiData)
         break
       default:
         throw new Error('unrecognised plugin type:' + pluginData)
@@ -115,7 +115,7 @@ export default class TeleportLib {
   // libraries
   // ------------------------------------------------------------
 
-  public useLibrary(libraryDefinition: LibraryDefinition): TeleportLib {
+  public useLibrary(libraryDefinition: LibraryDefinition): Teleport {
     const library = new ElementsLibrary(libraryDefinition)
     this.libraries[library.name] = library
     return this
@@ -132,7 +132,7 @@ export default class TeleportLib {
   // mappings
   // ------------------------------------------------------------
 
-  public useMapping(mappingData: Mapping): TeleportLib {
+  public useMapping(mappingData: Mapping): Teleport {
     const map = new ElementsLibraryTargetMapping(mappingData, this)
 
     this.mappings[map.name] = map
@@ -162,7 +162,7 @@ export default class TeleportLib {
   // targets
   // ------------------------------------------------------------
 
-  public useTarget(targetName: string): TeleportLib {
+  public useTarget(targetName: string): Teleport {
     if (this.targets[targetName]) throw new Error(`Target ${targetName} is already registered`)
 
     this.targets[targetName] = new Target(targetName)
@@ -171,7 +171,7 @@ export default class TeleportLib {
 
   public target(targetName: string): Target | null | undefined {
     if (!this.targets[targetName])
-      throw new Error(`No target named '${targetName}' exists. Did you register a mapping or a generator for this target?`)
+      throw new Error(`No target named '${targetName}' exists.Did you register a mapping or a generator for this target?`)
     
     return this.targets[targetName]
   }
@@ -180,7 +180,7 @@ export default class TeleportLib {
   // generators
   // ------------------------------------------------------------
 
-  public useGenerator(generator: Generator): TeleportLib {
+  public useGenerator(generator: Generator): Teleport {
     if (! this.targets[generator.targetName]) {
       this.useTarget(generator.targetName)
     }
@@ -200,7 +200,7 @@ export default class TeleportLib {
   // ------------------------------------------------------------
   // generators
   // ------------------------------------------------------------
-  public usePublisher(publisher: Publisher): TeleportLib {
+  public usePublisher(publisher: Publisher): Teleport {
     this.publishers[publisher.name] = publisher
     return this
   }
@@ -209,7 +209,7 @@ export default class TeleportLib {
     return this.publishers[publisherName]
   }
 
-  public useGui(guiData: object): void {
+  public useGui(guiData: GuiData): void {
     const { library: libraryName } = guiData
     const library = this.library(libraryName)
 

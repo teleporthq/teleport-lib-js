@@ -38,7 +38,7 @@ var _this = this;
 Object.defineProperty(exports, "__esModule", { value: true });
 var teleport_generator_react_1 = require("../../teleport-generator-react");
 var fetch = require("isomorphic-fetch");
-var Teleport2_1 = require("./Teleport2");
+var TeleportLight_1 = require("./TeleportLight");
 var smallComponentJson = require('../../teleport-lib-js-dev/in/components/test.json');
 var coreRepo = 'https://gitlab.com/teleporthq/teleport-elements-core/raw/master/';
 var definitions;
@@ -96,7 +96,7 @@ function getData() {
             case 0: return [4 /*yield*/, getData()];
             case 1:
                 _a.sent();
-                teleport = new Teleport2_1.default(definitions, [mappingHtml, mappingReact], new teleport_generator_react_1.default());
+                teleport = new TeleportLight_1.default(definitions, [mappingHtml, mappingReact], new teleport_generator_react_1.default());
                 console.log(teleport.generator.componentGenerator.generate(smallComponentJson, {}));
                 console.log(teleport.generator.projectGenerator.generate(smallComponentJson, {}));
                 return [2 /*return*/];

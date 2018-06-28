@@ -1,6 +1,6 @@
 import TeleportGeneratorReact from '../../teleport-generator-react'
 import * as fetch from 'isomorphic-fetch'
-import Teleport from './Teleport2'
+import Teleport from './TeleportLight'
 const smallComponentJson = require('../../teleport-lib-js-dev/in/components/test.json')
 
 const coreRepo = 'https://gitlab.com/teleporthq/teleport-elements-core/raw/master/'

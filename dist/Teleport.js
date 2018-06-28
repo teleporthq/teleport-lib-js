@@ -35,7 +35,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var Promise = require("bluebird");
+var BluebirdPromise = require("bluebird");
 var isUrl = require("is-url");
 var fetch = require("isomorphic-fetch");
 var Target_1 = require("./lib/Target");
@@ -47,8 +47,8 @@ if (typeof window === 'undefined') {
     // tslint:disable-next-line:no-var-requires
     fs = require('fs');
 }
-var TeleportLib = /** @class */ (function () {
-    function TeleportLib() {
+var Teleport = /** @class */ (function () {
+    function Teleport() {
         this.libraries = {};
         this.mappings = {};
         this.targets = {};
@@ -59,8 +59,8 @@ var TeleportLib = /** @class */ (function () {
     // ------------------------------------------------------------
     // generic functions
     // ------------------------------------------------------------
-    TeleportLib.prototype.readPluginDefinitionFromFile = function (path) {
-        return __awaiter(this, void 0, Promise, function () {
+    Teleport.prototype.readPluginDefinitionFromFile = function (path) {
+        return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 if (typeof window !== 'undefined')
                     throw new Error('reading from files can only be used when lib is used in Node, not within a browser');
@@ -79,7 +79,7 @@ var TeleportLib = /** @class */ (function () {
             });
         });
     };
-    TeleportLib.prototype.readPluginDefinitionFromUrl = function (url) {
+    Teleport.prototype.readPluginDefinitionFromUrl = function (url) {
         return __awaiter(this, void 0, void 0, function () {
             var response, data, error_1;
             return __generator(this, function (_a) {
@@ -108,7 +108,7 @@ var TeleportLib = /** @class */ (function () {
     // ------------------------------------------------------------
     // plugins
     // ------------------------------------------------------------
-    TeleportLib.prototype.use = function (plugin) {
+    Teleport.prototype.use = function (plugin) {
         return __awaiter(this, void 0, void 0, function () {
             var _this = this;
             var _a, _b, _c;
@@ -137,7 +137,7 @@ var TeleportLib = /** @class */ (function () {
                     case 5: return [3 /*break*/, 10];
                     case 6:
                         if (!Array.isArray(plugin)) return [3 /*break*/, 8];
-                        return [4 /*yield*/, Promise.mapSeries(plugin, function (pluginItem) { return __awaiter(_this, void 0, Promise, function () {
+                        return [4 /*yield*/, BluebirdPromise.mapSeries(plugin, function (pluginItem) { return __awaiter(_this, void 0, void 0, function () {
                                 return __generator(this, function (_a) {
                                     switch (_a.label) {
                                         case 0: return [4 /*yield*/, this.use(pluginItem)];
@@ -157,7 +157,7 @@ var TeleportLib = /** @class */ (function () {
             });
         });
     };
-    TeleportLib.prototype.usePlugin = function (pluginData) {
+    Teleport.prototype.usePlugin = function (pluginData) {
         switch (pluginData.type) {
             case 'library':
                 this.useLibrary(pluginData);
@@ -181,12 +181,12 @@ var TeleportLib = /** @class */ (function () {
     // ------------------------------------------------------------
     // libraries
     // ------------------------------------------------------------
-    TeleportLib.prototype.useLibrary = function (libraryDefinition) {
+    Teleport.prototype.useLibrary = function (libraryDefinition) {
         var library = new ElementsLibrary_1.default(libraryDefinition);
         this.libraries[library.name] = library;
         return this;
     };
-    TeleportLib.prototype.library = function (libraryName) {
+    Teleport.prototype.library = function (libraryName) {
         if (!this.libraries[libraryName])
             throw new Error("Library " + libraryName + " has not been loaded");
         return this.libraries[libraryName];
@@ -194,7 +194,7 @@ var TeleportLib = /** @class */ (function () {
     // ------------------------------------------------------------
     // mappings
     // ------------------------------------------------------------
-    TeleportLib.prototype.useMapping = function (mappingData) {
+    Teleport.prototype.useMapping = function (mappingData) {
         var map = new ElementsLibraryTargetMapping_1.default(mappingData, this);
         this.mappings[map.name] = map;
         if (!this.targets[map.target]) {
@@ -205,10 +205,10 @@ var TeleportLib = /** @class */ (function () {
         this.library(map.library).useMapping(map);
         return this;
     };
-    TeleportLib.prototype.mapping = function (mappingName) {
+    Teleport.prototype.mapping = function (mappingName) {
         return this.mappings[mappingName];
     };
-    TeleportLib.prototype.map = function (targetName, source, type) {
+    Teleport.prototype.map = function (targetName, source, type) {
         var target = this.target(targetName);
         if (!target)
             return null;
@@ -217,21 +217,21 @@ var TeleportLib = /** @class */ (function () {
     // ------------------------------------------------------------
     // targets
     // ------------------------------------------------------------
-    TeleportLib.prototype.useTarget = function (targetName) {
+    Teleport.prototype.useTarget = function (targetName) {
         if (this.targets[targetName])
             throw new Error("Target " + targetName + " is already registered");
         this.targets[targetName] = new Target_1.default(targetName);
         return this;
     };
-    TeleportLib.prototype.target = function (targetName) {
+    Teleport.prototype.target = function (targetName) {
         if (!this.targets[targetName])
-            throw new Error("No target named '" + targetName + "' exists. Did you register a mapping or a generator for this target?");
+            throw new Error("No target named '" + targetName + "' exists.Did you register a mapping or a generator for this target?");
         return this.targets[targetName];
     };
     // ------------------------------------------------------------
     // generators
     // ------------------------------------------------------------
-    TeleportLib.prototype.useGenerator = function (generator) {
+    Teleport.prototype.useGenerator = function (generator) {
         if (!this.targets[generator.targetName]) {
             this.useTarget(generator.targetName);
         }
@@ -241,20 +241,20 @@ var TeleportLib = /** @class */ (function () {
         this.generators[generator.name] = generator;
         return this;
     };
-    TeleportLib.prototype.generator = function (generatorName) {
+    Teleport.prototype.generator = function (generatorName) {
         return this.generators[generatorName];
     };
     // ------------------------------------------------------------
     // generators
     // ------------------------------------------------------------
-    TeleportLib.prototype.usePublisher = function (publisher) {
+    Teleport.prototype.usePublisher = function (publisher) {
         this.publishers[publisher.name] = publisher;
         return this;
     };
-    TeleportLib.prototype.publisher = function (publisherName) {
+    Teleport.prototype.publisher = function (publisherName) {
         return this.publishers[publisherName];
     };
-    TeleportLib.prototype.useGui = function (guiData) {
+    Teleport.prototype.useGui = function (guiData) {
         var libraryName = guiData.library;
         var library = this.library(libraryName);
         if (!library) {
@@ -262,7 +262,7 @@ var TeleportLib = /** @class */ (function () {
         }
         library.useGui(guiData);
     };
-    return TeleportLib;
+    return Teleport;
 }());
-exports.default = TeleportLib;
+exports.default = Teleport;
 //# sourceMappingURL=Teleport.js.map

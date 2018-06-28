@@ -4,7 +4,7 @@ import Generator from './lib/Generator'
 import { LibraryDefinition, Mapping } from './types'
 import ElementsLibraryTargetMapping from './lib/ElementsLibraryTargetMapping'
 
-export default class Teleport {
+export default class TeleportLight {
   elementsLibrary: ElementsLibrary
   mappings: {
     [key: string]: ElementsLibraryTargetMapping
@@ -57,6 +57,10 @@ export default class Teleport {
       this.mappings[targetMapping.name] = maps || targetMapping.maps
       this.setTarget(targetMapping.target)
     }
+  }
+
+  public mapping(str: string) {
+    // compatibility placeholder with the main class
   }
 
   private setTarget(target) {
