@@ -1,14 +1,14 @@
 module.exports = {
   globals: {
-    __DATA__: "./test/unit/data"
+    __DATA__: "./__tests__/unit/data"
   },
   "transform": {
     "^.+\\.ts?$": "ts-jest"
   },
-  "testRegex": "test/.*\\.ts",
+  "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
   "testPathIgnorePatterns": [
-    "test/config",
-    "test/unit/utils"
+    "__tests__/config",
+    "__tests__/unit/utils"
   ],
   "moduleFileExtensions": [
     "ts",
