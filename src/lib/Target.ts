@@ -9,12 +9,16 @@ export default class Target {
   /**
    * all mappings defined for this target
    */
-  public mappings: object = {}
+  public mappings: {
+    [key: string]: ElementsLibraryTargetMapping
+  } = {}
 
   /**
    * all mappings indexed by their elements library defined for this target
    */
-  public mappingsByLibrary: object = {}
+  public mappingsByLibrary: {
+    [key: string]: ElementsLibraryTargetMapping
+  } = {}
 
   constructor(name: string) {
     this.name = name

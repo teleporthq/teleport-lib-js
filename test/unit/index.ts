@@ -1,42 +1,23 @@
 import * as fs from 'fs'
-import * as fetch from 'isomorphic-fetch'
 
 import Teleport from '../../src'
 import Publisher from '../../src/lib/Publisher'
 import ElementsLibrary from '../../src/lib/ElementsLibrary'
 import { Mapping, LibraryDefinition } from '../../src/types/index'
-import Target from '../../src/lib/Target';
+import Target from '../../src/lib/Target'
+import config from '../config'
+import getFromRepo from './utils/getFromRepo'
+import getFromLocal from './utils/getFromLocal'
+declare const __DATA__: string
 
 // local
 const invalidPath = 'this/path/does/not/exist'
-const validPath = `${__dirname}/data/libraries/teleport-elements-core.json`
-const localDefinitions = JSON.parse(fs.readFileSync(validPath).toString())
+const validPath = `${__DATA__}/elements/teleport-elements-core.json`
+const localDefinitions:LibraryDefinition = getFromLocal('elements/teleport-elements-core.json')
 
 // remote
-const coreRepo = 'https://gitlab.com/teleporthq/teleport-elements-core/raw/master/'
-const invalidUrl = `${coreRepo}invalidUrl`
-const definitionsUrl = `${coreRepo}definitions.json`
-const htmlMappingUrl = `${coreRepo}mapping-html.json`
-const reactMappingUrl = `${coreRepo}mapping-react.json`
-
-// utils
-const getFromRepo = async (file) => {
-  try {
-    const url = `${coreRepo}${file}`
-    const response = await fetch(url)
-    if (response.status !== 200)
-      throw new Error(`Could not download ${url}: ${response.statusText}`)
-
-    const data = await response.json()
-
-    if (!data)
-      throw new Error(`Could not download ${url}: EMPTY RESPONSE`)
-
-    return data
-  } catch (error) {
-    throw new Error(error)
-  }
-}
+const invalidUrl = `${config.coreRepo}invalidUrl`
+const definitionsUrl = `${config.coreRepo}definitions.json`
 
 let definitions: LibraryDefinition
 let mappingHtml: Mapping
@@ -50,22 +31,18 @@ beforeAll(async () => {
 })
 
 describe('Teleport', () => {
-  describe('utils', () => {
-    it('should reject because of invalid plugin path (readPluginDefinitionFromFile)', () => {
-      expect(new Teleport().readPluginDefinitionFromFile(invalidPath))
-        .rejects.toThrow(`path \`this/path/does/not/exist\` does not exist`)
+  describe('gui', () => {
+    const teleport = new Teleport()
+    it('should return undefined (target)', () => {
+      expect(() => teleport.target('test'))
+        .toThrow()
     })
-    it('should return a definition object (readPluginDefinitionFromFile)', async () => {
-      expect(await new Teleport().readPluginDefinitionFromFile(validPath))
-        .toEqual(localDefinitions)
-    })
-    it('should throw an error for invalid url (readPluginDefinitionFromUrl)', async () => {
-      expect(new Teleport().readPluginDefinitionFromUrl(invalidUrl))
-        .rejects.toThrow()
-    })
-    it('should return a definition object (readPluginDefinitionFromUrl)', async () => {
-      expect(await new Teleport().readPluginDefinitionFromUrl(definitionsUrl))
-        .toEqual(definitions)
+
+    it('should return a target target (target)', () => {
+      teleport.useLibrary(definitions)
+      teleport.useMapping(mappingHtml)
+      expect(teleport.target(mappingHtml.target))
+        .toBeInstanceOf(Target)
     })
   })
 
@@ -148,6 +125,25 @@ describe('Teleport', () => {
       teleport.useMapping(mappingHtml)
       expect(teleport.target(mappingHtml.target))
         .toBeInstanceOf(Target)
+    })
+  })
+
+  describe('utils', () => {
+    it('should reject because of invalid plugin path (readPluginDefinitionFromFile)', () => {
+      expect(new Teleport().readPluginDefinitionFromFile(invalidPath))
+        .rejects.toThrow(`path \`this/path/does/not/exist\` does not exist`)
+    })
+    it('should return a definition object (readPluginDefinitionFromFile)', async () => {
+      expect(await new Teleport().readPluginDefinitionFromFile(validPath))
+        .toEqual(localDefinitions)
+    })
+    it('should throw an error for invalid url (readPluginDefinitionFromUrl)', async () => {
+      expect(new Teleport().readPluginDefinitionFromUrl(invalidUrl))
+        .rejects.toThrow()
+    })
+    it('should return a definition object (readPluginDefinitionFromUrl)', async () => {
+      expect(await new Teleport().readPluginDefinitionFromUrl(definitionsUrl))
+        .toEqual(definitions)
     })
   })
 })

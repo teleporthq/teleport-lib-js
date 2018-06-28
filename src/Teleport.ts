@@ -10,12 +10,6 @@ import ElementsLibraryTargetMapping from './lib/ElementsLibraryTargetMapping'
 import transformers from './transformers'
 import { Mapping, LibraryDefinition, GuiData } from './types/index'
 
-let fs = null
-if (typeof window === 'undefined') {
-  // tslint:disable-next-line:no-var-requires
-  fs = require('fs')
-}
-
 export default class Teleport {
   public libraries: object = {}
   public mappings: object = {}
@@ -32,6 +26,8 @@ export default class Teleport {
     if (typeof window !== 'undefined')
       throw new Error('reading from files can only be used when lib is used in Node, not within a browser')
 
+    // tslint:disable-next-line:no-var-requires
+    const fs = require('fs')
     if (!fs.existsSync(path))
       throw new Error(`path \`${path}\` does not exist`)
 
@@ -209,14 +205,14 @@ export default class Teleport {
     return this.publishers[publisherName]
   }
 
-  public useGui(guiData: GuiData): void {
+  public useGui(guiData: GuiData) {
     const { library: libraryName } = guiData
     const library = this.library(libraryName)
 
-    if (!library) {
-      return console.error(`Library ${libraryName} was not found for gui package ${guiData.name}`)
-    }
-
+    if (!library)
+      throw new Error(`Library ${libraryName} was not found for gui package ${guiData.name}`)
+    
     library.useGui(guiData)
+    return this
   }
 }

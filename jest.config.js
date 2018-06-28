@@ -1,10 +1,18 @@
 module.exports = {
+  globals: {
+    __DATA__: "./test/unit/data"
+  },
+  testPathIgnorePatterns: [
+    "test/config\.ts"
+  ], 
   "transform": {
     "^.+\\.ts?$": "ts-jest"
   },
   "testRegex": "test/.*\\.ts",
   testPathIgnorePatterns: [
     "node_modules",
+    "test/config",
+    "test/unit/utils"
   ],
   "moduleFileExtensions": [
     "ts",
@@ -19,6 +27,8 @@ module.exports = {
   "collectCoverageFrom": [
     "src/**/*",
     "src/transformers/**/*",
-    "!**/__test__/**"
+    "!**/__test__/**",
+    "!src/TeleportLight\.ts",
+    "!src/demo\.ts"
   ]
 }
