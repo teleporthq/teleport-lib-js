@@ -1,6 +1,6 @@
 {
-  "name": "teleport-lib-js",
-  "version": "0.0.2",
+  "name": "@teleporthq/teleport-lib-js",
+  "version": "0.0.3",
   "description": "",
   "main": "dist/index.js",
   "scripts": {
