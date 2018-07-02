@@ -9,8 +9,6 @@ import getFromLocal from './utils/getFromLocal'
 declare const __DATA__: string
 
 // local
-const invalidPath = 'this/path/does/not/exist'
-const validPath = `${__DATA__}/elements/teleport-elements-core.json`
 const localDefinitions:LibraryDefinition = getFromLocal('elements/teleport-elements-core.json')
 
 // remote
@@ -20,6 +18,9 @@ const definitionsUrl = `${config.coreRepo}definitions.json`
 let definitions: LibraryDefinition
 let mappingHtml: Mapping
 let mappingReact: Mapping
+
+// we download some files, let's give it some time
+jest.setTimeout(15000)
 
 // tests
 beforeAll(async () => {
@@ -59,7 +60,6 @@ describe('Teleport', () => {
 
   describe('publishers', () => {
     const teleport = new Teleport()
-    const publisher = new Publisher('test')
     it('should return an instance of teleport', async () => {
       const publisher = new Publisher('test')
       expect(teleport.usePublisher(publisher))
@@ -80,11 +80,13 @@ describe('Teleport', () => {
     })
     it('should return an instance of teleport (useLibrary)', async () => {
       teleport.useLibrary(definitions)
+
       expect(teleport.useMapping(mappingHtml))
         .toEqual(teleport)
     })
     it('should return an instance of teleport / mapping extension (useMapping)', async () => {
       teleport.useMapping(mappingHtml)
+
       expect(teleport.useMapping(mappingReact))
         .toEqual(teleport)
     })
@@ -95,17 +97,27 @@ describe('Teleport', () => {
   })
 
   describe('plugins', () => {
-    const teleport = new Teleport()
     it('should throw an unvalid plugin error (usePlugin)', () => {
       const unvalidPlugin = { type: 'unvalid' }
-      expect(() => teleport.usePlugin(unvalidPlugin))
+
+      expect(() => new Teleport().usePlugin(unvalidPlugin))
         .toThrow()
     })
+    it('should throw a not-an-url error (use)', async () => {
+      expect(new Teleport().use('this is not an url'))
+        .rejects.toThrowError()
+      })
+    })
     it('should return an instance of teleport (use with definitions)', async () => {
+      const teleport = new Teleport()
+
       expect(await teleport.use(definitions))
         .toEqual(teleport)
     })
     it('should return an instance of teleport (use with mapping)', async () => {
+      const teleport = new Teleport()
+      await teleport.use(definitions)
+
       expect(await teleport.use(mappingHtml))
         .toEqual(teleport)
     })
@@ -127,14 +139,6 @@ describe('Teleport', () => {
   })
 
   describe('utils', () => {
-    it('should reject because of invalid plugin path (readPluginDefinitionFromFile)', () => {
-      expect(new Teleport().readPluginDefinitionFromFile(invalidPath))
-        .rejects.toThrow(`path \`this/path/does/not/exist\` does not exist`)
-    })
-    it('should return a definition object (readPluginDefinitionFromFile)', async () => {
-      expect(await new Teleport().readPluginDefinitionFromFile(validPath))
-        .toEqual(localDefinitions)
-    })
     it('should throw an error for invalid url (readPluginDefinitionFromUrl)', async () => {
       expect(new Teleport().readPluginDefinitionFromUrl(invalidUrl))
         .rejects.toThrow()

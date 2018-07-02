@@ -22,23 +22,6 @@ export default class Teleport {
   // generic functions
   // ------------------------------------------------------------
 
-  public async readPluginDefinitionFromFile(path: string): Promise<any> {
-    if (typeof window !== 'undefined') throw new Error('reading from files can only be used when lib is used in Node, not within a browser')
-
-    const fs = require('fs')
-    if (!fs.existsSync(path)) throw new Error(`path \`${path}\` does not exist`)
-
-    return new Promise((resolve, reject) => {
-      try {
-        const content = fs.readFileSync(path)
-        const json = JSON.parse(content)
-        resolve(json)
-      } catch (error) {
-        reject(error)
-      }
-    })
-  }
-
   public async readPluginDefinitionFromUrl(url: string) {
     try {
       const response = await fetch(url)
@@ -61,9 +44,9 @@ export default class Teleport {
     switch (typeof plugin) {
       case 'string':
         if (isUrl(plugin)) {
-          this.usePlugin(await this.readPluginDefinitionFromUrl(plugin as string))
+          // this.usePlugin(await this.readPluginDefinitionFromUrl(plugin as string))
         } else {
-          this.usePlugin(await this.readPluginDefinitionFromFile(plugin as string))
+          throw new Error(`\`${plugin}\` is not an url`)
         }
         break
 
