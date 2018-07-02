@@ -3,6 +3,7 @@
 *~
 *.pyc
 build/
+dist/
 coverage/
 *.log*
 *.sublime-project
