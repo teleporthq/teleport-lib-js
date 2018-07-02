@@ -22,9 +22,9 @@ var Target = /** @class */ (function () {
         mapping.setTarget(this);
     };
     Target.prototype.setGenerator = function (generator) {
-        if (this._generator)
+        if (this.targetGenerator)
             throw new Error("A Generator for target " + this.name + " is already registered");
-        this._generator = generator;
+        this.targetGenerator = generator;
     };
     /**
      * retrieves a mapping by it's name
@@ -53,9 +53,9 @@ var Target = /** @class */ (function () {
     };
     Object.defineProperty(Target.prototype, "generator", {
         get: function () {
-            if (!this._generator)
+            if (!this.targetGenerator)
                 throw new Error("No generator registered for target " + this.name);
-            return this._generator;
+            return this.targetGenerator;
         },
         enumerable: true,
         configurable: true

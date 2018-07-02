@@ -4,8 +4,11 @@ var ElementsLibrary = /** @class */ (function () {
     function ElementsLibrary(libraryDefinition) {
         this.mappings = {};
         this.targets = {};
-        this.targetMapping = {};
-        Object.assign(this, libraryDefinition);
+        var name = libraryDefinition.name, version = libraryDefinition.version, type = libraryDefinition.type, elements = libraryDefinition.elements;
+        this.name = name;
+        this.version = version;
+        this.type = type;
+        this.elements = elements;
     }
     /**
      * retrieves an element by it's name
@@ -24,15 +27,7 @@ var ElementsLibrary = /** @class */ (function () {
         this.mappings[mapping.name] = mapping;
         var target = mapping.target;
         this.targets[target.name] = target;
-        this.targetMapping[target.name] = mapping;
         mapping.setLibrary(this);
-    };
-    /**
-     * applies data from a generic object to the current library
-     * @param libData
-     */
-    ElementsLibrary.prototype.applyData = function (libData) {
-        Object.assign(this, libData);
     };
     /**
      * retrieves a target for the current elements library
@@ -42,21 +37,14 @@ var ElementsLibrary = /** @class */ (function () {
         return this.targets[targetName];
     };
     /**
-     * retrieves all mappings of the current library for a target
-     * @param targetName
-     */
-    ElementsLibrary.prototype.mapping = function (targetName) {
-        return this.targetMapping[targetName];
-    };
-    /**
      *
      * @param guiData sets up gui data to be used by the Teleport Playground Inspector
      */
+    // @todo should this stay in the core class?
     ElementsLibrary.prototype.useGui = function (guiData) {
         var _this = this;
-        if (guiData.library !== this.name) {
+        if (guiData.library !== this.name)
             throw new Error("Library gui " + guiData.library + " not compatible with " + this.name);
-        }
         if (!guiData.elements)
             throw new Error("invalid gui defintion for " + this.name);
         Object.keys(guiData.elements).map(function (elementName) {
@@ -65,6 +53,13 @@ var ElementsLibrary = /** @class */ (function () {
                 return;
             element.gui = guiData.elements[elementName];
         });
+    };
+    /**
+     * applies data from a generic object to the current library
+     * @param libData
+     */
+    ElementsLibrary.prototype.applyData = function (libData) {
+        Object.assign(this, libData);
     };
     return ElementsLibrary;
 }());

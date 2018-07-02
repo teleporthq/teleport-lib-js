@@ -1,7 +1,7 @@
 {
   "mode": "modules",
   "out": "docs",
-  "name": "my-project-name",
+  "name": "teleport lib js",
   "theme": "default",
   "ignoreCompilerErrors": "true",
   "experimentalDecorators": "true",
@@ -12,5 +12,6 @@
   "stripInternal": "true",
   "suppressExcessPropertyErrors": "true",
   "suppressImplicitAnyIndexErrors": "true",
-  "module": "commonjs"
+  "module": "commonjs",
+  "readme": "readme.md"
 }

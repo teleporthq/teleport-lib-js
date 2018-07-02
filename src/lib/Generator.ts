@@ -2,7 +2,7 @@ import Target from './Target'
 import ComponentGenerator from './Generator/Component'
 import ProjectGenerator from './Generator/Project'
 
-class Generator {
+export default class Generator {
   public name: string
   public type: string = 'generator'
   public targetName: string
@@ -18,7 +18,4 @@ class Generator {
   public setTarget(target: Target): void {
     this.target = target
   }
-
 }
-
-export default Generator

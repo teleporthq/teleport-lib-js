@@ -1,0 +1,33 @@
+{
+  "name": "teleport-elements-core-html",
+  "version": "0.0.1",
+  "type": "mapping",
+  "library": "teleport-elements-core",
+  "target": "html",
+  "maps": {
+    "Text": {
+      "type": "span"
+    },
+    "Button": {
+      "type": "button"
+    },
+    "Image": {
+      "type": "img",
+      "props": {
+        "src": "props.uri"
+      }
+    },
+    "View": {
+      "type": "div"
+    },
+    "H1": {
+      "type": "h1"
+    },
+    "Pre": {
+      "type": "pre"
+    },
+    "Link": {
+      "type": "a"
+    }
+  }
+}

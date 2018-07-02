@@ -1,20 +1,25 @@
-import * as fs from 'fs-jetpack'
-import * as isUrl from 'is-url'
-import fetch from 'node-fetch'
 import ElementsLibraryTargetMapping from './ElementsLibraryTargetMapping'
 import Target from './Target'
+import { LibraryDefinition } from '../types'
 
 export default class ElementsLibrary {
   public name: string
   public version: string
   public type: string
   public elements: any
-  public mappings: object = {}
-  public targets: object = {}
-  public targetMapping: object = {}
+  public mappings: {
+    [key: string]: ElementsLibraryTargetMapping
+  } = {}
+  public targets: {
+    [key: string]: Target
+  } = {}
 
-  constructor (libraryDefinition: object) {
-    Object.assign(this, libraryDefinition)
+  constructor(libraryDefinition: LibraryDefinition) {
+    const { name, version, type, elements } = libraryDefinition
+    this.name = name
+    this.version = version
+    this.type = type
+    this.elements = elements
   }
 
   /**
@@ -33,53 +38,43 @@ export default class ElementsLibrary {
    */
   public useMapping(mapping: ElementsLibraryTargetMapping): void {
     this.mappings[mapping.name] = mapping
-    const target = (mapping.target as Target)
+    const target = mapping.target as Target
     this.targets[target.name] = target
-    this.targetMapping[target.name] = mapping
     mapping.setLibrary(this)
-  }
-
-  /**
-   * applies data from a generic object to the current library
-   * @param libData
-   */
-  private applyData(libData: object): void {
-    Object.assign(this, libData)
   }
 
   /**
    * retrieves a target for the current elements library
    * @param targetName
    */
-  public target(targetName: string): Target | null {
+  public target(targetName: string): Target | undefined {
     return this.targets[targetName]
   }
 
   /**
-   * retrieves all mappings of the current library for a target
-   * @param targetName
-   */
-  public mapping(targetName: string): ElementsLibraryTargetMapping | null {
-    return this.targetMapping[targetName]
-  }
-
-  /**
-   * 
+   *
    * @param guiData sets up gui data to be used by the Teleport Playground Inspector
    */
+  // @todo should this stay in the core class?
   public useGui(guiData): void {
-    if (guiData.library !== this.name) {
-      throw new Error(`Library gui ${guiData.library} not compatible with ${this.name}`)
-    }
+    if (guiData.library !== this.name) throw new Error(`Library gui ${guiData.library} not compatible with ${this.name}`)
 
-    if (! guiData.elements) throw new Error(`invalid gui defintion for ${this.name}`)
+    if (!guiData.elements) throw new Error(`invalid gui defintion for ${this.name}`)
 
-    Object.keys(guiData.elements).map(elementName => {
+    Object.keys(guiData.elements).map((elementName) => {
       const element = this.elements[elementName]
 
       if (!element) return
 
       element.gui = guiData.elements[elementName]
     })
+  }
+
+  /**
+   * applies data from a generic object to the current library
+   * @param libData
+   */
+  public applyData(libData: object): void {
+    Object.assign(this, libData)
   }
 }

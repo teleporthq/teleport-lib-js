@@ -8,10 +8,10 @@ var __assign = (this && this.__assign) || Object.assign || function(t) {
     return t;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var index_1 = require("../index");
 var ElementsLibraryTargetMapping = /** @class */ (function () {
-    function ElementsLibraryTargetMapping(libraryMappingDefinition) {
+    function ElementsLibraryTargetMapping(libraryMappingDefinition, instance) {
         this.maps = {};
+        this.teleport = instance;
         Object.assign(this, libraryMappingDefinition);
     }
     /**
@@ -20,10 +20,9 @@ var ElementsLibraryTargetMapping = /** @class */ (function () {
      */
     ElementsLibraryTargetMapping.prototype.setTarget = function (target) {
         this.target = target;
-        // computed the extended map if there is one
+        // compute the extended map if there is one
         if (this.extends) {
-            var extendedMapping = index_1.default.mapping(this.extends);
-            // tslint:disable-next-line:max-line-length
+            var extendedMapping = this.teleport.mapping(this.extends);
             if (!extendedMapping)
                 throw new Error("Mapping '" + this.name + "' depends on '" + this.extends + "' which was not yet registered for target '" + this.target.name + "' Please register it before the current one");
             this.extends = extendedMapping;
@@ -38,18 +37,18 @@ var ElementsLibraryTargetMapping = /** @class */ (function () {
         this.library = library;
     };
     /**
-     * applies data from a generic object
-     * @param libData
-     */
-    ElementsLibraryTargetMapping.prototype.applyData = function (libData) {
-        Object.assign(this, libData);
-    };
-    /**
      * retrieves the mapping of a specific element for the current target mapping
      * @param type
      */
     ElementsLibraryTargetMapping.prototype.map = function (type) {
         return this.maps[type];
+    };
+    /**
+     * applies data from a generic object
+     * @param libData
+     */
+    ElementsLibraryTargetMapping.prototype.applyData = function (libData) {
+        Object.assign(this, libData);
     };
     return ElementsLibraryTargetMapping;
 }());
