@@ -1,6 +1,6 @@
 {
   "name": "teleport-lib-js",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "",
   "main": "dist/index.js",
   "scripts": {
@@ -18,7 +18,7 @@
     "type": "git",
     "url": "git+ssh://git@github.com/teleporthq/teleport-lib-js.git"
   },
-  "author": "Cristian Moldovan",
+  "author": "teleportHQ",
   "license": "MIT",
   "devDependencies": {
     "@types/jest": "^23.1.3",
