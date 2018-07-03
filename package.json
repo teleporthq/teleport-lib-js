@@ -1,6 +1,6 @@
 {
   "name": "@teleporthq/teleport-lib-js",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "",
   "main": "dist/index.js",
   "scripts": {
@@ -37,6 +37,7 @@
     "is-url": "^1.2.4",
     "isomorphic-fetch": "^2.2.1",
     "jss": "^9.8.7",
-    "jss-preset-default": "^4.5.0"
+    "jss-preset-default": "^4.5.0",
+    "pretty-quick": "^1.6.0"
   }
 }
