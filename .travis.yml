@@ -3,7 +3,8 @@ node_js:
   - '10'
 script:
   - npm run lint
-  - npm test
+  - npm run test:coverage
+  - codecov
 before_deploy:
   - npm run build
 deploy:
