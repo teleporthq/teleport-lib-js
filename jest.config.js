@@ -22,6 +22,7 @@ module.exports = {
   "testEnvironment": "node",
   "collectCoverageFrom": [
     "src/**/*",
+    "!**/*.d.ts",
     "!src/TeleportLight\.ts",
     "!src/demo\.ts"
   ]
