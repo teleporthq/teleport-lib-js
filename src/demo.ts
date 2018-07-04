@@ -1,6 +1,6 @@
 import * as fetch from 'isomorphic-fetch'
 
-const coreRepo = 'https://gitlab.com/teleporthq/teleport-elements-core/raw/master/'
+const coreRepo = 'https://raw.githubusercontent.com/teleporthq/teleport-elements-core/master/'
 
 async function getFromRepo(file) {
   try {

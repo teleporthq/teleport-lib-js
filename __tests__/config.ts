@@ -1,3 +1,3 @@
 export default {
-  'coreRepo': 'https://gitlab.com/teleporthq/teleport-elements-core/raw/master/'
+  coreRepo: 'https://raw.githubusercontent.com/teleporthq/teleport-elements-core/master/',
 }
