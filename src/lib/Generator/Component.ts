@@ -1,4 +1,5 @@
 import Generator from '../Generator'
+import FileSet from './FileSet'
 
 export default class ComponentGenerator {
   public generator: Generator
@@ -7,7 +8,7 @@ export default class ComponentGenerator {
     this.generator = generator
   }
 
-  public generate(component: any, options: any): string {
+  public generate<T, U>(component: T, options: U): FileSet {
     throw new Error("COMPONENT GENERATOR'S GENERATE METHOD SHOULD NOT BE INVOKED DIRECTLY! Please use a target specific generator")
   }
 }

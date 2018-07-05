@@ -1,6 +1,7 @@
 import Generator from './Generator'
 import ElementsLibraryTargetMapping from './ElementsLibraryTargetMapping'
 import ElementsLibrary from './ElementsLibrary'
+import { Mapping } from '../types'
 
 export default class Target {
   public name: string
@@ -62,7 +63,7 @@ export default class Target {
    * @param source source element library
    * @param type name if the element
    */
-  public map(source: string, type: string): object | null {
+  public map(source: string, type: string): Mapping | null {
     const mapping = this.mapLibrary(source)
     if (!mapping) return null
 

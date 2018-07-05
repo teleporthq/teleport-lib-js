@@ -7,8 +7,8 @@ export default class Generator {
   public type: string = 'generator'
   public targetName: string
   public target: Target
-  public componentGenerator: ComponentGenerator
-  public projectGenerator: ProjectGenerator
+  public componentGenerator: any // ComponentGenerator
+  public projectGenerator: any // ProjectGenerator
 
   constructor(name: string, targetName: string) {
     this.name = name
