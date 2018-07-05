@@ -9,7 +9,7 @@ export default class FileSet {
     return this.filesByName
   }
 
-  public getFileNames(): string[] | any[] {
+  public getFileNames(): string[] {
     return Object.keys(this.filesByName)
   }
 
