@@ -3,7 +3,7 @@
   "version": "0.0.5",
   "description": "",
   "main": "dist/index.js",
-  "types": "src/index.d.ts",
+  "types": "dist/index.d.ts",
   "scripts": {
     "start": "tsc -w",
     "build": "npm run clean && tsc",
