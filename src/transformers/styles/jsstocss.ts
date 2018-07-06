@@ -1,9 +1,11 @@
-import jss from 'jss'
+/// <reference path="../../../node_modules/@types/jss/index.d.ts" />
+import jss, { CreateStyleSheetOptions, GenerateClassName, Rule } from 'jss'
 import preset from 'jss-preset-default'
 
 jss.setup(preset())
 
-const generateClassName = (rule, sheet) => rule.key
+// @todo: check why we use key (does not exist on type rule)
+export const generateClassName = (rule: any) => rule.key
 
 export function stylesheet(styles) {
   const styleSheet = jss.createStyleSheet(styles, { generateClassName })

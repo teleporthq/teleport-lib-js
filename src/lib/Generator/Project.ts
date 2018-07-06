@@ -1,5 +1,7 @@
+import { Project } from '../../types'
 import Generator from '../Generator'
 import FileSet from './FileSet'
+import { Options } from 'prettier'
 
 export default class ProjectGenerator {
   public generator: Generator
@@ -8,7 +10,7 @@ export default class ProjectGenerator {
     this.generator = generator
   }
 
-  public generate<T, U>(project: T, options: U): FileSet {
+  public generate(project: Project, options?: { prettier: Options }): FileSet {
     throw new Error("PROJECT GENERATOR'S GENERATE METHOD SHOULD NOT BE INVOKED DIRECTLY! Please use a target specific generator")
   }
 }

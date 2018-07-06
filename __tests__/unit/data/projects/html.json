@@ -1,0 +1,46 @@
+{
+  "name": "TestProject",
+  "accountSlug": "test-author",
+  "slug": "test-project",
+  "components": {
+    "TestComponent": {
+      "name": "TestComponent",
+      "content": {
+        "type": "View",
+        "source": "teleport-elements-core",
+        "name" : "View1",
+        "style" : {
+          "width" : "100%",
+          "height" : "100%",
+          "flexDirection" : "row",
+          "backgroundColor" : "magenta"
+        },
+        "children": [
+          {
+            "type" : "Image",
+            "source" : "teleport-elements-core",
+            "props": {
+              "src": "storage.google.com"
+            }
+          }
+        ]
+      }
+    }
+  },
+  "pages": {
+    "TestPage": {
+      "name": "TestPage",
+      "content": {
+        "type": "View",
+        "source": "teleport-elements-core",
+        "name" : "View1",
+        "children": [
+          {
+            "type" : "TestComponent",
+            "source" : "components"
+          }
+        ]
+      }
+    }
+  }
+}

@@ -1,3 +1,29 @@
+export interface Page {
+  name: string
+  content: Content
+  children?: Component[] | string
+}
+
+export interface Component extends Page {}
+
+export interface Content {
+  type: string
+  source: string
+  name: string
+  style: {
+    [key: string]: string
+  }
+}
+
+export interface Project {
+  name: string
+  accountSlug?: string
+  slug?: string
+  components: {
+    [key: string]: Component
+  }
+}
+
 export interface GuiData {
   library: string
   [key: string]: string | object
