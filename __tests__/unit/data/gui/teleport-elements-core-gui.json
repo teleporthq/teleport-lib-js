@@ -1,0 +1,9 @@
+{
+  "name": "teleport-elements-core-gui",
+  "library": "teleport-elements-core",
+  "version": "0.0.1",
+  "type": "gui",
+  "elements": {
+    "View": {}
+  }
+}

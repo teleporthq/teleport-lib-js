@@ -1,6 +1,7 @@
 import ElementsLibraryTargetMapping from './ElementsLibraryTargetMapping'
 import Target from './Target'
 import { LibraryDefinition } from '../types'
+import { GuiData } from '../../dist/types'
 
 export default class ElementsLibrary {
   public name: string
@@ -49,5 +50,26 @@ export default class ElementsLibrary {
    */
   public target(targetName: string): Target | undefined {
     return this.targets[targetName]
+  }
+
+  /**
+   *
+   * @param guiData sets up gui data to be used by the Teleport Playground Inspector
+   */
+  // @todo should this stay in the core class?
+  public useGui(guiData: GuiData): void {
+    if (guiData.library !== this.name) {
+      throw new Error(`Library gui ${guiData.library} not compatible with ${this.name}`)
+    }
+
+    if (!guiData.elements) throw new Error(`invalid gui defintion for ${this.name}`)
+
+    Object.keys(guiData.elements).map((elementName) => {
+      const element = this.elements[elementName]
+
+      if (!element) return
+
+      element.gui = guiData.elements[elementName]
+    })
   }
 }

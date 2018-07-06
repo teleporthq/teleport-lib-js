@@ -8,7 +8,7 @@ import Publisher from './lib/Publisher'
 import ElementsLibrary from './lib/ElementsLibrary'
 import ElementsLibraryTargetMapping from './lib/ElementsLibraryTargetMapping'
 import transformers from './transformers'
-import { Mapping, LibraryDefinition } from './types'
+import { Mapping, LibraryDefinition, GuiData } from './types'
 
 export default class Teleport {
   public libraries: object = {}
@@ -79,6 +79,9 @@ export default class Teleport {
         break
       case 'publisher':
         this.usePublisher(pluginData as Publisher)
+        break
+      case 'gui':
+        this.useGui(pluginData as GuiData)
         break
       default:
         throw new Error('unrecognised plugin type:' + pluginData)
@@ -178,5 +181,15 @@ export default class Teleport {
 
   public publisher(publisherName: string): Publisher | null | undefined {
     return this.publishers[publisherName]
+  }
+
+  public useGui(guiData: GuiData) {
+    const { library: libraryName } = guiData
+    const library = this.library(libraryName)
+
+    if (!library) throw new Error(`Library ${libraryName} was not found for gui package ${guiData.name}`)
+
+    library.useGui(guiData)
+    return this
   }
 }
