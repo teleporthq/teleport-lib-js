@@ -1,7 +1,7 @@
 import ElementsLibraryTargetMapping from './ElementsLibraryTargetMapping'
 import Target from './Target'
 import { LibraryDefinition } from '../types'
-import { GuiData } from '../../dist/types'
+import { GuiData } from '../../src/types'
 
 export default class ElementsLibrary {
   public name: string
