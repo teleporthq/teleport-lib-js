@@ -8,7 +8,7 @@ import Publisher from './lib/Publisher'
 import ElementsLibrary from './lib/ElementsLibrary'
 import ElementsLibraryTargetMapping from './lib/ElementsLibraryTargetMapping'
 import transformers from './transformers'
-import { Mapping, LibraryDefinition, GuiData } from './types'
+import { Mapping, LibraryDefinition } from './types'
 
 export default class Teleport {
   public libraries: object = {}
@@ -126,7 +126,7 @@ export default class Teleport {
 
   public map(targetName: string, source: string, type: string): object {
     const target = this.target(targetName)
-    
+
     return target.map(source, type)
   }
 
