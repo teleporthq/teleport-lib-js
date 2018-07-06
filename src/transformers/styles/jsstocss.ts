@@ -1,5 +1,4 @@
-/// <reference path="../../../node_modules/@types/jss/index.d.ts" />
-import jss, { CreateStyleSheetOptions, GenerateClassName, Rule } from 'jss'
+import jss from 'jss'
 import preset from 'jss-preset-default'
 
 jss.setup(preset())

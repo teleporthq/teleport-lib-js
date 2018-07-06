@@ -1,5 +1,6 @@
 import Teleport from '../../src'
 import Publisher from '../../src/lib/Publisher'
+import Generator from '../../src/lib/Generator'
 import ElementsLibrary from '../../src/lib/ElementsLibrary'
 import { Mapping, LibraryDefinition } from '../../src/types'
 import Target from '../../src/lib/Target'
@@ -30,6 +31,15 @@ beforeAll(async () => {
 })
 
 describe('Teleport', () => {
+  describe('generator', () => {
+    const teleport = new Teleport()
+    teleport.useGenerator(new Generator('test', 'test'))
+    it('should return a generator', () => {
+      expect(teleport.generator('test'))
+        .toBeInstanceOf(Generator)
+    })
+  })
+
   describe('gui', () => {
     const teleport = new Teleport()
     it('should return undefined (target)', () => {
@@ -55,6 +65,10 @@ describe('Teleport', () => {
       const { name } = localDefinitions
       expect(teleport.library(name).name)
         .toEqual(name)
+    })
+    it('should trhow an library-has-not-been-loaded error', async () => {
+      expect(() => teleport.library('test'))
+        .toThrowError()
     })
   })
 
@@ -94,6 +108,11 @@ describe('Teleport', () => {
       expect(teleport.mapping('teleport-elements-core-react').name)
         .toEqual('teleport-elements-core-react')
     })
+    it('should return a map (map)', () => {
+      const mapping = teleport.map('html', 'teleport-elements-core', 'View')
+      expect(mapping)
+        .toEqual({ type: 'div' })
+    })
   })
 
   describe('plugins', () => {
@@ -114,6 +133,12 @@ describe('Teleport', () => {
       expect(await teleport.use(definitions))
         .toEqual(teleport)
     })
+    it('should return an instance of teleport (use with definitions)', async () => {
+      const teleport = new Teleport()
+      
+      expect(await teleport.use(definitions))
+        .toEqual(teleport)
+    })
     it('should return an instance of teleport (use with mapping)', async () => {
       const teleport = new Teleport()
       await teleport.use(definitions)
@@ -121,24 +146,53 @@ describe('Teleport', () => {
       expect(await teleport.use(mappingHtml))
         .toEqual(teleport)
     })
+    it('should return an instance of teleport (use with array)', async () => {
+      const teleport = new Teleport()
+      expect(await teleport.use([definitions, mappingHtml]))
+        .toEqual(teleport)
+    })
+    it('should return an instance of teleport (use with Publisher)', async () => {
+      const teleport = new Teleport()
+      expect(await teleport.use(new Publisher('test')))
+        .toEqual(teleport)
+    })
+    it('should return an instance of teleport (use with Generator)', async () => {
+      const teleport = new Teleport()
+      expect(await teleport.use(new Generator('test', 'test')))
+        .toEqual(teleport)
+    })
+    it('should return an instance of teleport (use with mapping)', async () => {
+      const teleport = new Teleport()
+      expect(await teleport.use(definitionsUrl))
+        .toEqual(teleport)
+    })
   })
 
   describe('target', () => {
-    const teleport = new Teleport()
     it('should return undefined (target)', () => {
-      expect(() => teleport.target('test'))
+      expect(() => new Teleport().target('test'))
         .toThrow()
     })
-
     it('should return a target target (target)', () => {
+      const teleport = new Teleport()
       teleport.useLibrary(definitions)
       teleport.useMapping(mappingHtml)
       expect(teleport.target(mappingHtml.target))
         .toBeInstanceOf(Target)
     })
+    it('should return a target target (target)', () => {
+      const teleport = new Teleport()
+      teleport.useTarget('test')
+      expect(() => teleport.useTarget('test'))
+        .toThrowError()
+    })
   })
 
-  describe('utils', () => {
+describe('utils', () => {
+    it('should throw an generic error(readPluginDefinitionFromUrl)', async () => {
+      expect(new Teleport().readPluginDefinitionFromUrl('wrong://'))
+        .rejects.toThrow()
+    })
     it('should throw an error for invalid url (readPluginDefinitionFromUrl)', async () => {
       expect(new Teleport().readPluginDefinitionFromUrl(invalidUrl))
         .rejects.toThrow()

@@ -60,12 +60,4 @@ export default class ElementsLibraryTargetMapping {
   public map(type: string): Mapping | null {
     return this.maps[type]
   }
-
-  /**
-   * applies data from a generic object
-   * @param libData
-   */
-  public applyData(libData: object): void {
-    Object.assign(this, libData)
-  }
 }

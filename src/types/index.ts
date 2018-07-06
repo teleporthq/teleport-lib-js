@@ -4,7 +4,11 @@ export interface Page {
   children?: Component[] | string
 }
 
-export interface Component extends Page {}
+export interface Component {
+  name: string
+  content: Content
+  children?: Component[] | string
+}
 
 export interface Content {
   type: string

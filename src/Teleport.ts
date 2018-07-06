@@ -44,7 +44,7 @@ export default class Teleport {
     switch (typeof plugin) {
       case 'string':
         if (isUrl(plugin)) {
-          // this.usePlugin(await this.readPluginDefinitionFromUrl(plugin as string))
+          this.usePlugin(await this.readPluginDefinitionFromUrl(plugin as string))
         } else {
           throw new Error(`\`${plugin}\` is not an url`)
         }
@@ -79,9 +79,6 @@ export default class Teleport {
         break
       case 'publisher':
         this.usePublisher(pluginData as Publisher)
-        break
-      case 'gui':
-        this.useGui(pluginData as GuiData)
         break
       default:
         throw new Error('unrecognised plugin type:' + pluginData)
@@ -129,8 +126,7 @@ export default class Teleport {
 
   public map(targetName: string, source: string, type: string): object {
     const target = this.target(targetName)
-    if (!target) return null
-
+    
     return target.map(source, type)
   }
 
@@ -182,15 +178,5 @@ export default class Teleport {
 
   public publisher(publisherName: string): Publisher | null | undefined {
     return this.publishers[publisherName]
-  }
-
-  public useGui(guiData: GuiData) {
-    const { library: libraryName } = guiData
-    const library = this.library(libraryName)
-
-    if (!library) throw new Error(`Library ${libraryName} was not found for gui package ${guiData.name}`)
-
-    library.useGui(guiData)
-    return this
   }
 }
