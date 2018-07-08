@@ -11,7 +11,7 @@ In a world in which information is delivered through multiple channels and diffe
 
 This approach is not new. Our concept has been greatly influenced by Facebooks's [React](https://reactjs.org/) library, where React is a component based User Interface description language and [ReactDOM](https://reactjs.org/docs/react-dom.html) and [React-Native](https://facebook.github.io/react-native/) are implementations of the same User Interface description in different targets.
 
-However, we wanted to go one step further and to propose a format which would be 100% code-free and which could eventually become a  **protocol** for a bi-directional and friction-less communication layer between the designers's tools and developers' technologies and frameworks. 
+However, we wanted to go one step further and to propose a format which would be 100% code-free and which could eventually become a  **protocol** for a bi-directional and friction-less communication layer between the designers's tools and developers' technologies and frameworks. This **protocol** comes under a JSON file named an *Intermediary Representation (IR)*.
 
 ## Principles
 At a high-level, a User Interface can have 3 main *digital states*: a `description state` (such as a Photoshop or Sketch file), a `code state`, (such as a HTML file) and an `instance state` (such as the DOM equivalent of an HTML file). These 3 states are the design-to-code pipeline for the user interface of any standard web application:
@@ -23,3 +23,17 @@ design state ---> code state ---> instance state
 Until very recently, those three states where completely distinct and managed by specialized tools, respectively, design tools, code editors, and browsers. It is only in the past two years that *code* and *instance* states (and tools) got significantly closer through hot-reloading mechanisms.
 
 Teleport closes the gap and allows for a real-time experience through all the digital states of a user interface.
+
+## How to use
+### Install
+`npm i @teleporthq/teleport-lib-js @teleporthq/teleport-definitions-core @teleporthq/teleport-mapping-html @teleporthq/teleport-mapping-react @teleporthq/teleport-renderer-react`
+
+### Tutorial
+
+`@teleporthq/teleport-lib-js` is the main library. The library uses a series of *plugins* to transform a JSON Intermediary Representation to code or a working instance.  
+
+Plugins can be of 4 different types:
+- **definition**: a list of (code-free) primitive elements with which Teleport can read and make sense of a JSON IR
+- **mapping**: a list of mappings between an element definition and its representation for a specific code
+- **generator**: an engine which uses definitions and mappings to return the code (under the form of a list of files)
+- **renderer**: an engine which uses definitions and mappings to render a working instance of the generated code
