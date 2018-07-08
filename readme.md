@@ -20,7 +20,7 @@ At a high-level, a User Interface can have 3 main *digital states*: a `descripti
 design state ---> code state ---> instance state 
 ```
 
-Until very recently, those three states where completely distinct and managed by specialized tools, respectively, design tools, code editors, and browsers. It is only in the past two years that *code* and *instance* states (and tools) got significantly closer through hot-reloading mechanisms.
+Until very recently, those three states were completely distinct and managed by specialized tools, respectively, design tools, code editors, and browsers. It is only in the past two years that *code* and *instance* states (and tools) got significantly closer through hot-reloading mechanisms.
 
 Teleport closes the gap and allows for a real-time experience through all the digital states of a user interface.
 
