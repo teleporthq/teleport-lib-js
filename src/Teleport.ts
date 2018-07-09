@@ -11,12 +11,24 @@ import transformers from './transformers'
 import { Mapping, LibraryDefinition } from './types'
 
 export default class Teleport {
-  public libraries: object = {}
-  public mappings: object = {}
-  public targets: object = {}
-  public generators: object = {}
-  public publishers: object = {}
-  public transformers: any = transformers
+  public libraries: {
+    [key: string]: ElementsLibrary
+  } = {}
+  public mappings: {
+    [key: string]: ElementsLibraryTargetMapping
+  } = {}
+  public targets: {
+    [key: string]: Target
+  } = {}
+  public generators: {
+    [key: string]: Generator
+  } = {}
+  public publishers: {
+    [key: string]: Publisher
+  } = {}
+  public transformers: {
+    [key: string]: object
+  } = transformers
 
   // ------------------------------------------------------------
   // generic functions

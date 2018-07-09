@@ -58,7 +58,7 @@ describe('Teleport', () => {
   describe('libraries', () => {
     const teleport = new Teleport()
     it('should return an instance of teleport (useLibrary)', async () => {
-      expect(teleport.useLibrary(new ElementsLibrary(localDefinitions)))
+      expect(teleport.useLibrary(localDefinitions))
         .toEqual(teleport)
     })
     it('should return a library definition', async () => {
@@ -188,7 +188,7 @@ describe('Teleport', () => {
     })
   })
 
-describe('utils', () => {
+  describe('utils', () => {
     it('should throw an generic error(readPluginDefinitionFromUrl)', async () => {
       expect(new Teleport().readPluginDefinitionFromUrl('wrong://'))
         .rejects.toThrow()

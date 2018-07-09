@@ -6,7 +6,9 @@ export default class ElementsLibrary {
   public name: string
   public version: string
   public type: string
-  public elements: any
+  public elements: {
+    [key: string]: object
+  }
   public mappings: {
     [key: string]: ElementsLibraryTargetMapping
   } = {}
