@@ -28,11 +28,6 @@ export interface Project {
   }
 }
 
-export interface GuiData {
-  library: string
-  [key: string]: string | object
-}
-
 export interface LibraryDefinition {
   name: string
   version: string
