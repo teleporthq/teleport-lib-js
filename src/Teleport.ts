@@ -1,6 +1,6 @@
 import * as BluebirdPromise from 'bluebird'
-import * as isUrl from 'is-url'
-import * as fetch from 'isomorphic-fetch'
+import isUrl = require('is-url')
+import 'isomorphic-fetch'
 
 import Target from './lib/Target'
 import Generator from './lib/Generator'
