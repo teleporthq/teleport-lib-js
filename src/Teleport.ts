@@ -1,5 +1,4 @@
-import * as BluebirdPromise from 'bluebird'
-import isUrl = require('is-url')
+import isUrl from 'is-url'
 import 'isomorphic-fetch'
 
 import Target from './lib/Target'
@@ -64,12 +63,8 @@ export default class Teleport {
 
       case 'object':
         if (Array.isArray(plugin)) {
-          await BluebirdPromise.mapSeries(
-            plugin,
-            async (pluginItem): Promise<any> => {
-              return this.use(pluginItem)
-            }
-          )
+          const pluginItems = await Promise.all(plugin)
+          pluginItems.map((pluginItem): Promise<any> => this.use(pluginItem))
         } else {
           this.usePlugin(plugin as object)
         }

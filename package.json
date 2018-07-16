@@ -1,6 +1,6 @@
 {
   "name": "@teleporthq/teleport-lib-js",
-  "version": "0.0.14",
+  "version": "0.0.15",
   "description": "",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -39,7 +39,6 @@
     "prettier": "^1.13.7",
     "@types/node": "^10.5.0",
     "@types/prettier": "^1.13.1",
-    "bluebird": "^3.5.1",
     "is-url": "^1.2.4",
     "isomorphic-fetch": "^2.2.1",
     "jss": "^9.8.7",

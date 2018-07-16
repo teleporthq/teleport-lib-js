@@ -1,7 +1,10 @@
-import * as jsstocss from './jsstocss'
+import { generateClassName, stylesheet } from './jsstocss'
 
 const styleTransformers = {
-  jsstocss,
+  jsstocss: {
+    generateClassName,
+    stylesheet,
+  },
 }
 
 export default styleTransformers
