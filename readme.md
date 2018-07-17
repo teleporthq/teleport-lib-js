@@ -23,7 +23,7 @@ Install Teleport libraries
 npm i @teleporthq/teleport-lib-js @teleporthq/teleport-elements-core @teleporthq/teleport-generator-html
 ```
 
-Create an `index.js` file
+Create an `index.js` file:
 ```javascript
 // load libraries
 const Teleport = require('@teleporthq/teleport-lib-js').default
@@ -46,7 +46,7 @@ const projectFiles = teleport.target('html').generator.generateProject(teleportP
 console.log(projectFiles)
 ```
 
-Create a `data/sample1.json' file 
+Create a `data/sample1.json file:
 ```json
 {
   "name": "Demo",
@@ -90,8 +90,8 @@ Create a `data/sample1.json' file
 }
 ```
 
-Run
-`node index.js'
+Run:
+```node index.js```
 
 ## Motivation
 In a world in which information is delivered through multiple channels and different technologies, we believe that there are many benefits in decoupling the description of User Interfaces from the code which will render them. 
@@ -111,16 +111,12 @@ Until very recently, those three states were completely distinct and managed by 
 
 Teleport closes the gap and allows for a real-time experience through all the digital states of a user interface.
 
-## How to use
-### Install
-`npm i @teleporthq/teleport-lib-js @teleporthq/teleport-definitions-core @teleporthq/teleport-mapping-html @teleporthq/teleport-mapping-react @teleporthq/teleport-renderer-react`
+## Documentation
+*Coming soon*
 
-### Tutorial
+## License
+MIT
 
-`@teleporthq/teleport-lib-js` is the main library. The library uses a series of *plugins* to transform a JSON Intermediary Representation to code or a working instance.  
-
-Plugins can be of 4 different types:
-- **definition**: a list of (code-free) primitive elements with which Teleport can read and make sense of a JSON IR
-- **mapping**: a list of mappings between an element definition and its representation for a specific code
-- **generator**: an engine which uses definitions and mappings to return the code (under the form of a list of files)
-- **renderer**: an engine which uses definitions and mappings to render a working instance of the generated code
+## Contact Us
+https://teleporthq.io
+https://twitter.com/teleporthqio
