@@ -1,11 +1,97 @@
 # Teleport
+
+A suite of open-source libraries and tools used by [teleportHQ](https://teleporthq.io/?g), an online platform which simplifies the process of creating, maintaining and publishing user interfaces for desktop and mobile devices.
+
 [![npm](https://img.shields.io/npm/v/@teleporthq/teleport-lib-js.svg)](https://github.com/teleporthq/teleport-lib-js)
 [![Build Status](https://travis-ci.com/teleporthq/teleport-lib-js.svg?branch=master)](https://travis-ci.com/teleporthq/teleport-lib-js)
 [![Codecov](https://img.shields.io/codecov/c/github/teleporthq/teleport-lib-js.svg)](https://codecov.io/gh/teleporthq/teleport-lib-js)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/208450ec31774771a9935aad67d3f7ab)](https://www.codacy.com/app/Utwo/teleport-lib-js?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=teleporthq/teleport-lib-js&amp;utm_campaign=Badge_Grade)
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
 
-Teleport is a suite of open-source libraries and tools used by [teleportHQ](https://teleporthq.io/?g), an online platform which simplifies the process of creating, maintaining and publishing user interfaces for desktop and mobile devices.
+## Live Demo on CodeSandbox
+https://codesandbox.io/s/nrn9ylwn7m
+
+## Getting started
+
+Create a new project:
+```
+npm init -y
+```
+
+Install Teleport libraries
+```
+npm i @teleporthq/teleport-lib-js @teleporthq/teleport-elements-core @teleporthq/teleport-generator-html
+```
+
+Create an `index.js` file
+```javascript
+// load libraries
+const Teleport = require('@teleporthq/teleport-lib-js').default
+const TeleportElementsCore = require('@teleporthq/teleport-elements-core')
+const TeleportGeneratorHtml = require('@teleporthq/teleport-generator-html').default
+
+const teleport = new Teleport()
+const { definitions, mappingHtml } = TeleportElementsCore
+
+// sample of a Teleport Project 
+const teleportProject = require('./data/sample1.json')
+
+// setup Teleport for html code generation 
+teleport.useLibrary(definitions)  
+teleport.useMapping(mappingHtml)
+teleport.useGenerator(new TeleportGeneratorHtml())
+
+const projectFiles = teleport.target('html').generator.generateProject(teleportProject)
+
+console.log(projectFiles)
+```
+
+Create a `data/sample1.json' file 
+```json
+{
+  "name": "Demo",
+  "components": {
+    "Component1": {
+      "name": "Component1",
+      "content": {
+        "name": "content",
+        "type": "View",
+        "source": "teleport-elements-core",
+        "children": "Hello from a child",
+        "style": {}
+      }
+    },
+    "Component2": {
+      "name": "Component2",
+      "content": {
+        "type": "Text",
+        "name": "Component2",
+        "source": "teleport-elements-core",
+        "children": "hello from Component2"
+      }
+    }
+  },
+  "pages": {
+    "Page1": {
+      "name": "Page1",
+      "content": {
+        "name": "content",
+        "type": "View",
+        "source": "teleport-elements-core",
+        "children": [
+          {
+            "source": "components",
+            "type": "Component2"
+          }
+        ]
+      }
+    }
+  }
+}
+```
+
+Run
+`node index.js'
 
 ## Motivation
 In a world in which information is delivered through multiple channels and different technologies, we believe that there are many benefits in decoupling the description of User Interfaces from the code which will render them. 
