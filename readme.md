@@ -55,7 +55,7 @@ teleport.useMapping(mappingHtml)
 teleport.useMapping(mappingReact)
 teleport.useMapping(mappingNext)
 
-// load the generators for html an
+// load the generators for html an react/Next.js
 teleport.useGenerator(new TeleportGeneratorHtml())
 teleport.useGenerator(new TeleportGeneratorReactNext())
 
