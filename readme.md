@@ -8,6 +8,14 @@ A suite of open-source libraries and tools used by [teleportHQ](https://teleport
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/208450ec31774771a9935aad67d3f7ab)](https://www.codacy.com/app/Utwo/teleport-lib-js?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=teleporthq/teleport-lib-js&amp;utm_campaign=Badge_Grade)
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
 
+- [Live Demo](#live-demo-on-codesandbox)
+- [Getting started](#getting-started)
+- [Motivation](#motivation)
+- [Principles](#principles)
+- [Documentation (coming soon)](#documentation)
+- [License](#license)
+- [Contact Us](#contact-us)
+
 ## Live Demo on CodeSandbox
 https://codesandbox.io/s/nrn9ylwn7m
 
