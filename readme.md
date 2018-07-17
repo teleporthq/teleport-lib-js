@@ -118,5 +118,7 @@ Teleport closes the gap and allows for a real-time experience through all the di
 MIT
 
 ## Contact Us
+
 https://teleporthq.io
+
 https://twitter.com/teleporthqio
