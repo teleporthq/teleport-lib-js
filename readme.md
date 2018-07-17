@@ -35,25 +35,35 @@ npm i @teleporthq/teleport-lib-js @teleporthq/teleport-elements-core @teleporthq
 
 Create an `index.js` file:
 ```javascript
-// load libraries
+// load Teleport libraries
 const Teleport = require('@teleporthq/teleport-lib-js').default
 const TeleportElementsCore = require('@teleporthq/teleport-elements-core')
 const TeleportGeneratorHtml = require('@teleporthq/teleport-generator-html').default
+const TeleportGeneratorReactNext = require('@teleporthq/teleport-generator-next').default
 
-const teleport = new Teleport()
-const { definitions, mappingHtml } = TeleportElementsCore
-
-// sample of a Teleport Project 
+// sample of a Teleport Project
 const teleportProject = require('./data/sample1.json')
 
-// setup Teleport for html code generation 
-teleport.useLibrary(definitions)  
+const teleport = new Teleport()
+const { definitions, mappingHtml, mappingReact, mappingNext } = TeleportElementsCore
+
+// setup teleport library for html code generation 
+teleport.useLibrary(definitions)
+
+// load mappings for html and react/Next.js (react/Next.js extends react's mapping)
 teleport.useMapping(mappingHtml)
+teleport.useMapping(mappingReact)
+teleport.useMapping(mappingNext)
+
+// load the generators for html an
 teleport.useGenerator(new TeleportGeneratorHtml())
+teleport.useGenerator(new TeleportGeneratorReactNext())
 
-const projectFiles = teleport.target('html').generator.generateProject(teleportProject)
+const projectFilesHtml = teleport.target('html').generator.generateProject(teleportProject)
+const projectFilesReactNext = teleport.target('next').generator.generateProject(teleportProject)
 
-console.log(projectFiles)
+console.log(projectFilesHtml)
+console.log(projectFilesReactNext)
 ```
 
 Create a `data/sample1.json file:
@@ -111,6 +121,10 @@ https://github.com/teleporthq/teleport-generator-react
 
 https://github.com/teleporthq/teleport-generator-next
 
+Vue.js (comming soon)
+
+Nuxt.js (coming soon)
+
 ## Motivation
 In a world in which information is delivered through multiple channels and different technologies, we believe that there are many benefits in decoupling the description of User Interfaces from the code which will render them. 
 
@@ -131,6 +145,9 @@ Teleport closes the gap and allows for a real-time experience through all the di
 
 ## Documentation
 *Coming soon*
+
+## Sponsors
+https://evozon.com
 
 ## License
 MIT
