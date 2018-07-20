@@ -5,7 +5,6 @@
     "tslint-config-prettier"
   ],
   "rules": {
-    "no-unused-variable": true,
     "ordered-imports": false,
     "curly": false,
     "interface-name": [true, "never-prefix"]
