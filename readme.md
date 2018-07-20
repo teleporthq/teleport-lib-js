@@ -11,6 +11,7 @@ A suite of open-source libraries and tools used by [teleportHQ](https://teleport
 
 - [Live Demo](#live-demo-on-codesandbox)
 - [Getting started](#getting-started)
+- [Teleport Intermediary Representation](#teleport-intermediary-representation)
 - [Official Generators](#official-generators)
 - [Motivation](#motivation)
 - [Principles](#principles)
@@ -112,6 +113,102 @@ Create a `data/sample1.json file:
 
 Run:
 ```node index.js```
+
+## Teleport Intermediary Representation
+
+A Teleport project is defined by a plain javascript object which respects Teleport's Intermediary Representation (TIR) format. 
+
+TIR is defined by 5 distinct structures described below with TypeScript types:
+
+- TeleportProject
+- ComponentObject
+- ComponentReference
+- PageObject
+- ContentObject
+
+To get familiar with TIR's format, copy-paste the following code in [TypesScript Playground](http://www.typescriptlang.org/play/index.html) or in a local TypeScript file.
+
+````typescript
+// index.ts
+interface ComponentObject {
+  name: string
+  content: ContentObject
+}
+
+interface ComponentReference {
+  source: "components",
+  type: string
+}
+
+interface PageObject {
+  name: string
+  content: ContentObject
+}
+
+interface ContentObject {
+  source: string,
+  type: string,
+  name: string,
+  style?: { [key:string]: string | number }
+  children: Array<ContentObject | ComponentReference> | string
+}
+
+interface TeleportProject {
+  components: {
+    [key: string]: ComponentObject
+  }
+  pages: {
+    [key: string]: PageObject
+  }
+}
+
+const teleportProject: TeleportProject = {
+  // define all the reusable components
+  "components": {
+    "Component1": {
+      "name": "Component1",
+      "content": {
+        "name": "Component1",
+        "type": "View",
+        "source": "teleport-elements-core",
+        "children": "Hello in red from Component1",
+        "style": {
+          "color": "red"
+        }
+      }
+    }
+  },
+  // define all the pages of the project
+  "pages": {
+    "Page1": {
+      "name": "Page1",
+      "content": {
+        "name": "Page1",
+        "type": "View",
+        "source": "teleport-elements-core",
+        "children": [
+          // the first child is a primitive element
+          {
+            "name": "test",
+            "source": "teleport-elements-core",
+            "type": "View",
+            "children": "Hello in red from a primitive element",
+            "style": {
+              "color": "blue"
+            }
+          },
+          // the second child is a reference to the component with the name "View1" (defined previously)
+          {
+            "source": "components",
+            "type": "Component1"
+          }
+        ],
+        "style": {}
+      }
+    }
+  }
+}
+````
 
 ## Official generators
 
