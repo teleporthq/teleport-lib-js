@@ -130,9 +130,9 @@ To get familiar with TIR's format, copy-paste the following code in [TypesScript
 
 ````typescript
 // index.ts
-interface ComponentObject {
+interface Component {
   name: string
-  content: ContentObject
+  content: Content
 }
 
 interface ComponentReference {
@@ -140,25 +140,25 @@ interface ComponentReference {
   type: string
 }
 
-interface PageObject {
+interface Page {
   name: string
-  content: ContentObject
+  content: Content
 }
 
-interface ContentObject {
+interface Content {
   source: string,
   type: string,
   name: string,
   style?: { [key:string]: string | number }
-  children: Array<ContentObject | ComponentReference> | string
+  children: Array<Content | ComponentReference> | string
 }
 
 interface TeleportProject {
   components: {
-    [key: string]: ComponentObject
+    [key: string]: Component
   }
   pages: {
-    [key: string]: PageObject
+    [key: string]: Page
   }
 }
 
