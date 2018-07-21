@@ -121,10 +121,10 @@ A Teleport project is defined by a plain javascript object which respects Telepo
 TIR is defined by 5 distinct structures described below with TypeScript types:
 
 - TeleportProject
-- ComponentObject
+- Component
 - ComponentReference
-- PageObject
-- ContentObject
+- Page
+- Content
 
 To get familiar with TIR's format, copy-paste the following code in [TypesScript Playground](http://www.typescriptlang.org/play/index.html) or in a local TypeScript file.
 
