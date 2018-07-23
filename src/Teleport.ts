@@ -1,4 +1,4 @@
-import isUrl from 'is-url'
+import isUrl = require('is-url')
 import 'isomorphic-fetch'
 
 import Target from './lib/Target'
