@@ -54,3 +54,8 @@ export interface Mapping {
     }
   }
 }
+
+export interface ElementMapping {
+  type: string
+  source: string
+}

@@ -1,7 +1,7 @@
 {
   "name": "@teleporthq/teleport-lib-js",
-  "version": "0.0.16",
-  "description": "",
+  "version": "0.0.17",
+  "description": "Teleport Core Library",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {

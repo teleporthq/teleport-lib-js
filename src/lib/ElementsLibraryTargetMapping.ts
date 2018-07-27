@@ -1,7 +1,7 @@
 import Target from './Target'
 import ElementsLibrary from './ElementsLibrary'
 import Teleport from '../Teleport'
-import { Mapping } from '../types'
+import { ElementMapping } from '../types'
 
 export default class ElementsLibraryTargetMapping {
   public name: string
@@ -56,7 +56,7 @@ export default class ElementsLibraryTargetMapping {
    * retrieves the mapping of a specific element for the current target mapping
    * @param type
    */
-  public map(type: string): Mapping | null {
+  public map(type: string): ElementMapping | null {
     return this.maps[type]
   }
 }

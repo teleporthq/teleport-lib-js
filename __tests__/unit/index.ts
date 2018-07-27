@@ -1,7 +1,6 @@
 import Teleport from '../../src'
 import Publisher from '../../src/lib/Publisher'
 import Generator from '../../src/lib/Generator'
-import ElementsLibrary from '../../src/lib/ElementsLibrary'
 import { Mapping, LibraryDefinition } from '../../src/types'
 import Target from '../../src/lib/Target'
 import config from '../config'
