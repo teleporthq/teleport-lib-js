@@ -36,7 +36,6 @@
   },
   "dependencies": {
     "prettier": "^1.13.7",
-    "@types/node": "^10.5.0",
     "@types/jss": "^9.5.4",
     "@types/prettier": "^1.13.1",
     "is-url": "^1.2.4",
