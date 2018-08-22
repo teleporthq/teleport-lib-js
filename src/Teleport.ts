@@ -63,8 +63,10 @@ export default class Teleport {
 
       case 'object':
         if (Array.isArray(plugin)) {
-          const pluginItems = await Promise.all(plugin)
-          pluginItems.map((pluginItem): Promise<any> => this.use(pluginItem))
+          // tslint:disable-next-line:prefer-for-of
+          for (let i = 0; i < plugin.length; i++) {
+            await this.use(plugin[i])
+          }
         } else {
           this.usePlugin(plugin as object)
         }
