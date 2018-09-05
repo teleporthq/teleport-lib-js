@@ -16,4 +16,10 @@ export default class FileSet {
   public getContent(fileName: string): string | null | undefined {
     return this.filesByName[fileName]
   }
+
+  public merge(source: FileSet): void {
+    source.getFileNames().map((fileName) => {
+      this.addFile(fileName, source.getContent(fileName))
+    })
+  }
 }
