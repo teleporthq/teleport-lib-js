@@ -103,7 +103,7 @@ export default class ProjectGenerator {
     const components = this.generateComponents(project, options)
     result.merge(components)
 
-    const pages = this.generateComponents(project, options)
+    const pages = this.generatePages(project, options)
     result.merge(pages)
 
     if (options && options.generatePackageFile) {
