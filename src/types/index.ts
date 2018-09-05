@@ -23,8 +23,11 @@ export interface Project {
   name: string
   accountSlug?: string
   slug?: string
-  components: {
+  components?: {
     [key: string]: Component
+  }
+  pages?: {
+    [key: string]: Page
   }
 }
 
@@ -58,4 +61,23 @@ export interface Mapping {
 export interface ElementMapping {
   type: string
   source: string
+  defaultImport?: boolean
+}
+
+export interface ProjectGeneratorOptions {
+  componentsPath?: string
+  pagesPath?: string
+  assetsPath?: string
+  assetsUrl?: string
+  generatePackageFile?: boolean
+  renderer?: string
+}
+
+export interface ComponentGeneratorOptions {
+  isPage?: boolean
+  componentsPath?: string
+  pagesPath?: string
+  assetsPath?: string
+  assetsUrl?: string
+  renderer?: string
 }
