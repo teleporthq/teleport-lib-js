@@ -3,6 +3,7 @@ import ComponentGenerator from './Generator/Component'
 import ProjectGenerator from './Generator/Project'
 import Renderer from './Generator/Renderer'
 import FileSet from './Generator/FileSet'
+import { Component, Project, ProjectGeneratorOptions, ComponentGeneratorOptions } from '../types'
 
 export default class Generator {
   public name: string
@@ -24,11 +25,11 @@ export default class Generator {
     this.target = target
   }
 
-  public generateComponent<T, U>(component: T, options: U): FileSet {
+  public generateComponent(component: Component, options: ComponentGeneratorOptions): FileSet {
     return this.componentGenerator.generate(component, options)
   }
 
-  public generateProject(component: any, options: any): FileSet {
-    return this.projectGenerator.generate(component, options)
+  public generateProject(project: Project, options: ProjectGeneratorOptions): FileSet {
+    return this.projectGenerator.generate(project, options)
   }
 }
