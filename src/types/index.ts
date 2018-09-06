@@ -1,3 +1,5 @@
+import Target from '../lib/Target'
+
 export interface Page {
   name: string
   content: Content
@@ -71,6 +73,7 @@ export interface ProjectGeneratorOptions {
   assetsUrl?: string
   generatePackageFile?: boolean
   renderer?: string
+  target?: Target
 }
 
 export interface ComponentGeneratorOptions {
@@ -80,4 +83,5 @@ export interface ComponentGeneratorOptions {
   assetsPath?: string
   assetsUrl?: string
   renderer?: string
+  target?: Target
 }

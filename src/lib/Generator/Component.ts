@@ -127,7 +127,8 @@ export default class ComponentGenerator {
       }
 
       /** if it's not a component, read the element's mapping from the target */
-      const elementMapping = this.generator.target.map(source, type)
+      const target = options.target || this.generator.target
+      const elementMapping = target.map(source, type)
 
       if (elementMapping) {
         /** if it has a source, it's not a primitive, so need to add the source library to depemdencies */
@@ -198,6 +199,7 @@ export default class ComponentGenerator {
       return
     }
 
-    return renderer.render(name, content, dependencies, styles, props, this.generator.target, options)
+    const target = options.target || this.generator.target
+    return renderer.render(name, content, dependencies, styles, props, target, options)
   }
 }
