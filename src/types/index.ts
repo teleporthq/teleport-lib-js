@@ -3,6 +3,7 @@ import Target from '../lib/Target'
 export interface Page {
   name: string
   content: Content
+  url?: string
   children?: Component[] | string
 }
 
