@@ -1,7 +1,7 @@
 import Target from './Target'
 import ComponentGenerator from './Generator/Component'
 import ProjectGenerator from './Generator/Project'
-import Renderer from './Generator/Renderer'
+import ComponentCodeGenerator from './Generator/ComponentCodeGenerator'
 import FileSet from './Generator/FileSet'
 import { Component, Project, ProjectGeneratorOptions, ComponentGeneratorOptions } from '../types'
 
@@ -13,7 +13,7 @@ export default class Generator {
   public componentGenerator: ComponentGenerator
   public projectGenerator: ProjectGenerator
 
-  constructor(name: string, targetName: string, componentRenderers?: { [key: string]: Renderer }) {
+  constructor(name: string, targetName: string, componentRenderers?: { [key: string]: ComponentCodeGenerator }) {
     this.name = name
     this.targetName = targetName
 

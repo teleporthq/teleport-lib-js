@@ -97,7 +97,7 @@ export default class ProjectGenerator {
     return result
   }
 
-  public generate(project: any, options?: ProjectGeneratorOptions): FileSet {
+  public generate(project: Project, options?: ProjectGeneratorOptions): FileSet {
     const result = new FileSet()
 
     const components = this.generateComponents(project, options)

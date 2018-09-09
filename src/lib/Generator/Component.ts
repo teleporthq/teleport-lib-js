@@ -3,8 +3,8 @@ import union from 'lodash/union'
 import Generator from '../Generator'
 import FileSet from './FileSet'
 import { cleanPath, getRelativePath, findNextIndexedKeyInObject } from '../utils'
-import { ComponentGeneratorOptions } from '../../types'
-import Renderer from './Renderer'
+import { ComponentGeneratorOptions, Component } from '../../types'
+import ComponentCodeGenerator from './ComponentCodeGenerator'
 
 const defaultOptions = {
   assetsPath: './static',
@@ -18,18 +18,18 @@ export default class ComponentGenerator {
   public generator: Generator
 
   public renderers: {
-    [key: string]: Renderer
+    [key: string]: ComponentCodeGenerator
   }
 
-  constructor(generator: Generator, renderers: { [key: string]: Renderer }) {
+  constructor(generator: Generator, renderers?: { [key: string]: ComponentCodeGenerator }) {
     this.generator = generator
     this.renderers = renderers
   }
 
-  public registerRenderer(name: string, renderer: Renderer): void {
+  public registerRenderer(name: string, renderer: ComponentCodeGenerator): void {
     if (this.renderers[name]) {
       // tslint:disable-next-line:no-console
-      console.warn(`Renderer ${name} is already registered on ${this.generator.name} ComponentGenerator`)
+      console.warn(`ComponentCodeGenerator ${name} is already registered on ${this.generator.name} ComponentGenerator`)
       return
     }
 
@@ -163,7 +163,7 @@ export default class ComponentGenerator {
     return dependencies
   }
 
-  public generate(component: any, options: ComponentGeneratorOptions): FileSet {
+  public generate(component: Component, options: ComponentGeneratorOptions): FileSet {
     const { name } = component
     let { content } = component
 
@@ -179,7 +179,7 @@ export default class ComponentGenerator {
     /** overwrite the content with the transformed one; stryle objects will now be class names */
     content = stylingResults.content
 
-    const props = component.editableProps ? Object.keys(component.editableProps) : null
+    const props = {} // component.editableProps ? Object.keys(component.editableProps) : null
 
     /** determine the renderer to be used */
     let rendererName = options.renderer
@@ -191,7 +191,7 @@ export default class ComponentGenerator {
       rendererName = 'default'
     }
 
-    const renderer: Renderer = this.renderers[rendererName] as Renderer
+    const renderer: ComponentCodeGenerator = this.renderers[rendererName] as ComponentCodeGenerator
 
     if (!renderer) {
       // tslint:disable-next-line:no-console

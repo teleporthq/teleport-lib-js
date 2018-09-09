@@ -1,8 +1,8 @@
 import FileSet from './FileSet'
 import Target from '../Target'
-import { ComponentGeneratorOptions } from '../../types'
+import { ComponentGeneratorOptions, Content } from '../../types'
 
-export default class Renderer {
+export default class ComponentCodeGenerator {
   public renderDependency(libraryName, types, options: ComponentGeneratorOptions) {
     // there can be only one default import;
     // if multiple, the last one will be used;
@@ -33,7 +33,7 @@ export default class Renderer {
     return `import ${importArray.join(', ')} from '${libraryName}'`
   }
 
-  public render(name: string, content: string, dependencies: any, styles, props, target: Target, options?: ComponentGeneratorOptions): FileSet | null {
+  public render(name: string, content: Content, dependencies: any, styles, props, target: Target, options?: ComponentGeneratorOptions): FileSet | null {
     return null
   }
 }
