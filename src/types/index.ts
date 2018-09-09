@@ -21,6 +21,10 @@ export interface Content {
   }
 }
 
+export interface ProjectTarget {
+  [targetOption: string]: any
+}
+
 export interface Project {
   name: string
   accountSlug?: string
@@ -30,6 +34,9 @@ export interface Project {
   }
   pages?: {
     [key: string]: Page
+  }
+  targets?: {
+    [targetName: string]: ProjectTarget
   }
 }
 
@@ -73,7 +80,7 @@ export interface ProjectGeneratorOptions {
   assetsUrl?: string
   generatePackageFile?: boolean
   renderer?: string
-  target?: Target
+  targets?: Target
 }
 
 export interface ComponentGeneratorOptions {
