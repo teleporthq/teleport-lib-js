@@ -179,7 +179,7 @@ export default class ComponentGenerator {
     /** overwrite the content with the transformed one; stryle objects will now be class names */
     content = stylingResults.content
 
-    const props = component.editableProps ? Object.keys(component.editableProps) : {}
+    const props = component.editableProps || {}
 
     /** determine the renderer to be used */
     let rendererName = options.renderer
