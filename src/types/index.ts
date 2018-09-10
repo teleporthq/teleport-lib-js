@@ -7,10 +7,22 @@ export interface Page {
   children?: Component[] | string
 }
 
+export interface ComponentEditableProp {
+  type: string
+  inputType?: string
+  inputConfig?: any
+  displayName?: string
+  defaultValue?: string
+  values?: any
+}
+
 export interface Component {
   name: string
   content: Content
   children?: Component[] | string
+  editableProps?: {
+    [key: string]: ComponentEditableProp
+  }
 }
 
 export interface Content {
