@@ -20,7 +20,7 @@ A suite of open-source libraries and tools used by [teleportHQ](https://teleport
 - [Contact Us](#contact-us)
 
 ## Live Demo on CodeSandbox
-https://codesandbox.io/s/nrn9ylwn7m
+[CodeSandbox Demo](https://codesandbox.io/s/0xo879310w)
 
 ## Getting started
 
@@ -39,7 +39,6 @@ Create an `index.js` file:
 // load Teleport libraries
 const Teleport = require('@teleporthq/teleport-lib-js').default
 const TeleportElementsCore = require('@teleporthq/teleport-elements-core')
-const TeleportGeneratorHtml = require('@teleporthq/teleport-generator-html').default
 const TeleportGeneratorReactNext = require('@teleporthq/teleport-generator-next').default
 
 // sample of a Teleport Project
@@ -48,23 +47,20 @@ const teleportProject = require('./data/sample1.json')
 const teleport = new Teleport()
 const { definitions, mappingHtml, mappingReact, mappingNext } = TeleportElementsCore
 
-// setup teleport library for html code generation 
+// setup teleport library for html code generation
 teleport.useLibrary(definitions)
 
-// load mappings for html and react/Next.js (react/Next.js extends react's mapping)
+// load mappings for html, react and Next.js (Next.js extends react's mapping)
 teleport.useMapping(mappingHtml)
 teleport.useMapping(mappingReact)
 teleport.useMapping(mappingNext)
 
-// load the generators for html an react/Next.js
-teleport.useGenerator(new TeleportGeneratorHtml())
+// load the generators for Next.js
 teleport.useGenerator(new TeleportGeneratorReactNext())
 
-const projectFilesHtml = teleport.target('html').generator.generateProject(teleportProject)
-const projectFilesReactNext = teleport.target('next').generator.generateProject(teleportProject)
+const projectFilesNext = teleport.target('next').generator.generateProject(teleportProject)
 
-console.log(projectFilesHtml)
-console.log(projectFilesReactNext)
+console.log(projectFilesNext)
 ```
 
 Create a `data/sample1.json file:
@@ -116,7 +112,7 @@ Run:
 
 ## Teleport Intermediary Representation
 
-A Teleport project is defined by a plain javascript object which respects Teleport's Intermediary Representation (TIR) format. 
+A Teleport project is defined by a plain javascript object which respects Teleport's Intermediary Representation (TIR) format.
 
 TIR is defined by 5 distinct structures described below with TypeScript types:
 
@@ -223,7 +219,7 @@ Vue.js (comming soon)
 Nuxt.js (coming soon)
 
 ## Motivation
-In a world in which information is delivered through multiple channels and different technologies, we believe that there are many benefits in decoupling the description of User Interfaces from the code which will render them. 
+In a world in which information is delivered through multiple channels and different technologies, we believe that there are many benefits in decoupling the description of User Interfaces from the code which will render them.
 
 This approach is not new. Our concept has been greatly influenced by Facebooks's [React](https://reactjs.org/) library, where React is a component based User Interface description language and [ReactDOM](https://reactjs.org/docs/react-dom.html) and [React-Native](https://facebook.github.io/react-native/) are implementations of the same User Interface description in different targets.
 
@@ -233,7 +229,7 @@ However, we wanted to go one step further and to propose a format which would be
 At a high-level, a User Interface can have 3 main *digital states*: a `description state` (such as a Photoshop or Sketch file), a `code state`, (such as a HTML file) and an `instance state` (such as the DOM equivalent of an HTML file). These 3 states are the design-to-code pipeline for the user interface of any standard web application:
 
 ```
-design state ---> code state ---> instance state 
+design state ---> code state ---> instance state
 ```
 
 Until very recently, those three states were completely distinct and managed by specialized tools, respectively, design tools, code editors, and browsers. It is only in the past two years that *code* and *instance* states (and tools) got significantly closer through hot-reloading mechanisms.
