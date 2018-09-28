@@ -31,7 +31,7 @@ npm init -y
 
 Install Teleport libraries
 ```
-npm i @teleporthq/teleport-lib-js @teleporthq/teleport-elements-core @teleporthq/teleport-generator-html
+npm i @teleporthq/teleport-lib-js @teleporthq/teleport-elements-core @teleporthq/teleport-generator-html @teleporthq/teleport-generator-next
 ```
 
 Create an `index.js` file:
@@ -58,7 +58,7 @@ teleport.useMapping(mappingNext)
 // load the generators for Next.js
 teleport.useGenerator(new TeleportGeneratorReactNext())
 
-const projectFilesNext = teleport.target('next').generator.generateProject(teleportProject)
+const projectFilesNext = teleport.target('next').generator.generateProject(teleportProject, { generatePackageFile: true })
 
 console.log(projectFilesNext)
 ```
@@ -208,15 +208,15 @@ const teleportProject: TeleportProject = {
 
 ## Official generators
 
-https://github.com/teleporthq/teleport-generator-html
+[HTML](https://github.com/teleporthq/teleport-generator-html)
 
-https://github.com/teleporthq/teleport-generator-react
+[React.js](https://github.com/teleporthq/teleport-generator-react)
 
-https://github.com/teleporthq/teleport-generator-next
+[Next.js](https://github.com/teleporthq/teleport-generator-next)
 
-Vue.js (comming soon)
+[Vue.js](https://github.com/teleporthq/teleport-generator-vue)
 
-Nuxt.js (coming soon)
+[Nuxt.js](https://github.com/teleporthq/teleport-generator-nuxt)
 
 ## Motivation
 In a world in which information is delivered through multiple channels and different technologies, we believe that there are many benefits in decoupling the description of User Interfaces from the code which will render them.
