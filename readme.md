@@ -20,7 +20,7 @@ A suite of open-source libraries and tools used by [teleportHQ](https://teleport
 - [Contact Us](#contact-us)
 
 ## Live Demo on CodeSandbox
-[CodeSandbox Demo](https://codesandbox.io/s/0xo879310w)
+[CodeSandbox Demo](https://codesandbox.io/s/l5olmj96m)
 
 ## Getting started
 
