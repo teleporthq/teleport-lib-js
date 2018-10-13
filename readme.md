@@ -11,7 +11,8 @@ A suite of open-source libraries and tools used by [teleportHQ](https://teleport
 
 - [Live Demo](#live-demo-on-codesandbox)
 - [Getting started](#getting-started)
-- [Teleport Intermediary Representation](#teleport-intermediary-representation)
+- [Development Stages](#development-stages)
+- [User Interface Definition Language (UIDL)](#user-interface-definition-language)
 - [Official Generators](#official-generators)
 - [Motivation](#motivation)
 - [Principles](#principles)
@@ -110,11 +111,20 @@ Create a `data/sample1.json file:
 Run:
 ```node index.js```
 
-## Teleport Intermediary Representation
+## Development Stages
 
-A Teleport project is defined by a plain javascript object which respects Teleport's Intermediary Representation (TIR) format.
+- Experimental
+- Prototype
+- Beta
+- Production
 
-TIR is defined by 5 distinct structures described below with TypeScript types:
+Currently all libraries are in the experimental stage. Further updates and development are coming soon.
+
+## User Interface Definition Language (UIDL)
+
+A Teleport project is defined by a plain javascript object which respects teleportHQ's User Interface Definition Language (UIDL) format.
+
+UIDL is defined by 5 distinct structures described below with TypeScript types:
 
 - TeleportProject
 - Component
@@ -122,7 +132,7 @@ TIR is defined by 5 distinct structures described below with TypeScript types:
 - Page
 - Content
 
-To get familiar with TIR's format, copy-paste the following code in [TypesScript Playground](http://www.typescriptlang.org/play/index.html) or in a local TypeScript file.
+To get familiar with UIDL's format, copy-paste the following code in [TypesScript Playground](http://www.typescriptlang.org/play/index.html) or in a local TypeScript file.
 
 ````typescript
 // index.ts
@@ -217,6 +227,10 @@ const teleportProject: TeleportProject = {
 [Vue.js](https://github.com/teleporthq/teleport-generator-vue)
 
 [Nuxt.js](https://github.com/teleporthq/teleport-generator-nuxt)
+
+[React Native](https://github.com/teleporthq/teleport-generator-react-native)
+
+[PHP](https://github.com/teleporthq/teleport-generator-php)
 
 ## Motivation
 In a world in which information is delivered through multiple channels and different technologies, we believe that there are many benefits in decoupling the description of User Interfaces from the code which will render them.
