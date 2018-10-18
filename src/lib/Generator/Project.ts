@@ -24,6 +24,9 @@ export default class ProjectGenerator {
       componentsPath,
       renderer: options.renderer,
     }
+    if (options && options.target) {
+      Object.assign(generatorOptions, { target: options.target })
+    }
 
     const result = new FileSet()
 
@@ -56,6 +59,9 @@ export default class ProjectGenerator {
       componentsPath,
       isPage: true,
       renderer: options.renderer,
+    }
+    if (options && options.target) {
+      Object.assign(generatorOptions, { target: options.target })
     }
 
     if (pages) {

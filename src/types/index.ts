@@ -93,7 +93,7 @@ export interface ProjectGeneratorOptions {
   assetsUrl?: string
   generatePackageFile?: boolean
   renderer?: string
-  targets?: Target
+  target?: Target
 }
 
 export interface ComponentGeneratorOptions {
